@@ -1,6 +1,7 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
+import { Reorder, motion } from "framer-motion";
 
 import Persen from "./persen";
 import BerapaPersen from "./pageBerapaPersen";
@@ -27,7 +28,6 @@ const defaultOrder = [
 export default function Home() {
   const [order, setOrder] = useState(defaultOrder);
 
-  // Load dari localStorage saat pertama kali render
   useEffect(() => {
     const savedOrder = localStorage.getItem("componentOrder");
     if (savedOrder) {
@@ -35,30 +35,9 @@ export default function Home() {
     }
   }, []);
 
-  // Simpan ke localStorage setiap kali order berubah
   useEffect(() => {
     localStorage.setItem("componentOrder", JSON.stringify(order));
   }, [order]);
-
-  // Fungsi drag & drop
-  const handleDragStart = (index) => (event) => {
-    event.dataTransfer.setData("index", index);
-  };
-
-  const handleDrop = (index) => (event) => {
-    event.preventDefault();
-    const fromIndex = event.dataTransfer.getData("index");
-    if (fromIndex !== index) {
-      const newOrder = [...order];
-      const movedItem = newOrder.splice(fromIndex, 1)[0];
-      newOrder.splice(index, 0, movedItem);
-      setOrder(newOrder);
-    }
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
 
   return (
     <div
@@ -66,24 +45,40 @@ export default function Home() {
       style={{ height: "auto", maxWidth: "430px", margin: "0 auto" }}
     >
       <h6 className="mt-3">Kalkulator Invest Saham</h6>
-      {order.map((key, index) => {
-        const Component = components[key];
-        return (
-          <div key={key} className="w-100">
-            <div
-              draggable
-              onDragStart={handleDragStart(index)}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop(index)}
-              className="w-100 mb-2 p-2 bg-white shadow-sm rounded"
-              style={{ cursor: "grab" }}
-            >
-              <Component />
-            </div>
-            {index < order.length - 1 && <hr className="w-100" />}
-          </div>
-        );
-      })}
+
+      {/* Gunakan div biasa agar tidak ada error */}
+      <Reorder.Group
+        axis="y"
+        values={order}
+        onReorder={setOrder}
+        className="w-100"
+        as="div"
+      >
+        {order.map((key) => {
+          const Component = components[key];
+
+          if (!Component) return null; // Mencegah error jika komponen tidak ditemukan
+
+          return (
+            <Reorder.Item key={key} value={key} as="div">
+              <motion.div
+                className="w-100 mb-2 p-2 bg-white shadow-sm rounded"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.95 }}
+                layout
+                layoutTransition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                }}
+              >
+                <Component />
+              </motion.div>
+              <hr className="w-100" />
+            </Reorder.Item>
+          );
+        })}
+      </Reorder.Group>
     </div>
   );
 }

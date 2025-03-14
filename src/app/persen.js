@@ -63,7 +63,7 @@ export default function Persen() {
               />
             </div>
           </div>
-          <div className="d-flex align-items-center justify-content-center p-0 mx-2 mb-3">
+          <div className="d-flex align-items-center justify-content-center p-0 mb-4">
             <p className="fw-bold mx-2 mb-0"> = </p>
             <input
               type="text"

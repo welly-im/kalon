@@ -42,7 +42,7 @@ export default function BerapaPersen() {
         style={{ backgroundColor: "#d4d8de" }}
       >
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className="mb-1">
+          <div className="mb-5">
             <div className="d-flex align-items-center justify-content-between my-2">
               <p className="my-0 me-3"> Berapa % </p>
               <input

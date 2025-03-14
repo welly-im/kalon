@@ -72,7 +72,7 @@ export default function HitungDividenDariJumlahLot() {
         style={{ backgroundColor: "#d4d8de" }}
       >
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className="mb-1">
+          <div className="mb-2">
             <p className="mx-0 mb-0"> Hasil dividen </p>
             <div className="d-flex align-items-center justify-content-between my-2">
               <p className="my-0 me-3"> Jumlah lot</p>

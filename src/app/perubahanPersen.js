@@ -41,7 +41,7 @@ export default function PerubahanPersen() {
         style={{ backgroundColor: "#d4d8de" }}
       >
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className="mb-1">
+          <div className="mb-2">
             <p className="mx-0 mb-0"> Perubahan persentase </p>
             <div className="d-flex align-items-center justify-content-between my-2">
               <p className="my-0 me-3"> dari</p>

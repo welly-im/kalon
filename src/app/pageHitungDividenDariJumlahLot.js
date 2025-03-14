@@ -2,38 +2,39 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 
-export default function PerubahanPersen() {
-  const [angka1, setAngka1] = useState("");
-  const [angka2, setAngka2] = useState("");
+export default function HitungDividenDariJumlahLot() {
+  const [jumlahLot, setJumlahLot] = useState("");
+  const [dividenPerLembar, setDividenPerLembar] = useState("");
   const [hasil, setHasil] = useState("");
 
   const formatNumber = (value) => {
     return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  const handleAngka1Change = (e) => {
-    setAngka1(formatNumber(e.target.value));
+  const handleJumlahLotChange = (e) => {
+    setJumlahLot(formatNumber(e.target.value));
   };
 
-  const handleAngka2Change = (e) => {
-    setAngka2(formatNumber(e.target.value));
+  const handleDividenPerLembarChange = (e) => {
+    setDividenPerLembar(formatNumber(e.target.value));
   };
 
   useEffect(() => {
-    const num1 = parseFloat(angka1.replace(/,/g, ""));
-    const num2 = parseFloat(angka2.replace(/,/g, ""));
-    if (!isNaN(num1) && !isNaN(num2) && num1 !== 0) {
-      setHasil((((num2 - num1) / num1) * 100).toLocaleString("en-US") + "%");
+    const lot = parseFloat(jumlahLot.replace(/,/g, ""));
+    const dividen = parseFloat(dividenPerLembar.replace(/,/g, ""));
+    if (!isNaN(lot) && !isNaN(dividen)) {
+      setHasil("Rp. " + (lot * 100 * dividen).toLocaleString("en-US"));
     } else {
       setHasil("");
     }
-  }, [angka1, angka2]);
+  }, [jumlahLot, dividenPerLembar]);
 
   const resetForm = () => {
-    setAngka1("");
-    setAngka2("");
+    setJumlahLot("");
+    setDividenPerLembar("");
     setHasil("");
   };
+
   return (
     <div className="mt-3 w-100">
       <div
@@ -42,27 +43,27 @@ export default function PerubahanPersen() {
       >
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="mb-1">
-            <p className="mx-0 mb-0"> Perubahan persentase </p>
+            <p className="mx-0 mb-0"> Hasil dividen </p>
             <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3"> dari</p>
+              <p className="my-0 me-3"> Jumlah lot</p>
               <input
                 type="text"
                 className="form-control text-center w-auto"
-                value={angka1}
-                onChange={handleAngka1Change}
+                value={jumlahLot}
+                onChange={handleJumlahLotChange}
               />
             </div>
             <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3"> ke </p>
+              <p className="my-0 me-3"> Dividen per lembar </p>
               <input
                 type="text"
                 className="form-control text-center w-auto"
-                value={angka2}
-                onChange={handleAngka2Change}
+                value={dividenPerLembar}
+                onChange={handleDividenPerLembarChange}
               />
             </div>
             <div className="d-flex align-items-center justify-content-between my-3">
-              <p className="my-0 me-3"> berapa % </p>
+              <p className="my-0 me-3"> Hasil </p>
               <input
                 type="text"
                 className="form-control text-center w-auto"

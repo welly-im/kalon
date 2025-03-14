@@ -48,6 +48,7 @@ export default function PerubahanPersen() {
               <input
                 type="text"
                 className="form-control text-center w-auto"
+                style={{ maxWidth: "180px", minWidth: "100px" }}
                 value={angka1}
                 onChange={handleAngka1Change}
               />
@@ -57,6 +58,7 @@ export default function PerubahanPersen() {
               <input
                 type="text"
                 className="form-control text-center w-auto"
+                style={{ maxWidth: "180px", minWidth: "100px" }}
                 value={angka2}
                 onChange={handleAngka2Change}
               />
@@ -66,6 +68,7 @@ export default function PerubahanPersen() {
               <input
                 type="text"
                 className="form-control text-center w-auto"
+                style={{ maxWidth: "180px", minWidth: "100px" }}
                 value={hasil}
                 readOnly
               />

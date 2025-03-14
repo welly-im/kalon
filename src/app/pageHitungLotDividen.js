@@ -82,6 +82,7 @@ export default function HitungLotDividen() {
               <input
                 type="text"
                 className="form-control text-center w-auto"
+                style={{ maxWidth: "180px", minWidth: "100px" }}
                 value={modal}
                 onChange={handleModalChange}
               />
@@ -91,6 +92,7 @@ export default function HitungLotDividen() {
               <input
                 type="text"
                 className="form-control text-center w-auto"
+                style={{ maxWidth: "180px", minWidth: "100px" }}
                 value={hargaPerLembar}
                 onChange={handleHargaPerLembarChange}
               />
@@ -100,6 +102,7 @@ export default function HitungLotDividen() {
               <input
                 type="text"
                 className="form-control text-center w-auto"
+                style={{ maxWidth: "180px", minWidth: "100px" }}
                 value={dividenPerLembar}
                 onChange={handleDividenPerLembarChange}
               />
@@ -120,6 +123,7 @@ export default function HitungLotDividen() {
                   <input
                     type="text"
                     className="form-control text-center w-auto"
+                    style={{ maxWidth: "180px", minWidth: "100px" }}
                     value={jumlahLot}
                     readOnly
                   />
@@ -129,6 +133,7 @@ export default function HitungLotDividen() {
                   <input
                     type="text"
                     className="form-control text-center w-auto"
+                    style={{ maxWidth: "180px", minWidth: "100px" }}
                     value={dividenTotal}
                     readOnly
                   />
@@ -138,6 +143,7 @@ export default function HitungLotDividen() {
                   <input
                     type="text"
                     className="form-control text-center w-auto"
+                    style={{ maxWidth: "180px", minWidth: "100px" }}
                     value={dividenYield}
                     readOnly
                   />

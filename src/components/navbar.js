@@ -20,7 +20,7 @@ export default function Navbar() {
         >
           🧮
         </button>
-        <Link href="/about" className="btn btn-outline-primary">
+        <Link href="#" className="btn btn-outline-primary">
           ℹ️
         </Link>
       </div>
@@ -31,7 +31,7 @@ export default function Navbar() {
         >
           <h5>Menu</h5>
           <Link
-            href="/calculator"
+            href="#"
             className="btn btn-primary w-100 mb-2"
             onClick={() => setShowPopup(false)}
           >

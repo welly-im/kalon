@@ -8,7 +8,7 @@ export default function BerapaPersen() {
   const [hasil, setHasil] = useState("");
 
   const formatNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
   const handleAngka1Change = (e) => {
@@ -20,8 +20,8 @@ export default function BerapaPersen() {
   };
 
   useEffect(() => {
-    const num1 = parseFloat(angka1.replace(/,/g, ""));
-    const num2 = parseFloat(angka2.replace(/,/g, ""));
+    const num1 = parseFloat(angka1.replace(/./g, ""));
+    const num2 = parseFloat(angka2.replace(/./g, ""));
     if (!isNaN(num1) && !isNaN(num2) && num2 !== 0) {
       setHasil(((num1 / num2) * 100).toLocaleString("en-US") + "%");
     } else {

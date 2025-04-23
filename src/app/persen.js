@@ -8,7 +8,10 @@ export default function Persen() {
   const [hasil, setHasil] = useState("");
 
   const formatNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let clean = value.replace(/[^\d,]/g, "").replace(",", ".");
+    const [integer, decimal] = clean.split(".");
+    const formattedInt = integer?.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return decimal !== undefined ? `${formattedInt},${decimal}` : formattedInt;
   };
 
   const handleAngka1Change = (e) => {
@@ -20,14 +23,23 @@ export default function Persen() {
   };
 
   useEffect(() => {
-    const num1 = parseFloat(angka1.replace(/,/g, ""));
-    const num2 = parseFloat(angka2.replace(/,/g, ""));
+    const parseToFloat = (str) =>
+      parseFloat(str.replace(/\./g, "").replace(",", "."));
+    const num1 = parseToFloat(angka1);
+    const num2 = parseToFloat(angka2);
     if (!isNaN(num1) && !isNaN(num2)) {
-      setHasil(((num1 / 100) * num2).toLocaleString("en-US"));
+      const result = (num1 / 100) * num2;
+      const formatted = result
+        .toFixed(2)
+        .toString()
+        .replace(".", ",")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      setHasil(formatted);
     } else {
       setHasil("");
     }
   }, [angka1, angka2]);
+
   const resetForm = () => {
     setAngka1("");
     setAngka2("");

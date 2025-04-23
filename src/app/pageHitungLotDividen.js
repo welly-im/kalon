@@ -11,7 +11,7 @@ export default function HitungLotDividen() {
   const [dividenYield, setDividenYield] = useState("");
 
   const formatNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
   const handleModalChange = (e) => {
@@ -27,9 +27,9 @@ export default function HitungLotDividen() {
   };
 
   useEffect(() => {
-    const totalModal = parseFloat(modal.replace(/,/g, ""));
-    const harga = parseFloat(hargaPerLembar.replace(/,/g, ""));
-    const dividen = parseFloat(dividenPerLembar.replace(/,/g, ""));
+    const totalModal = parseFloat(modal.replace(/./g, ""));
+    const harga = parseFloat(hargaPerLembar.replace(/./g, ""));
+    const dividen = parseFloat(dividenPerLembar.replace(/./g, ""));
 
     if (!isNaN(totalModal) && !isNaN(harga) && harga > 0) {
       const lot = Math.floor(totalModal / (harga * 100));

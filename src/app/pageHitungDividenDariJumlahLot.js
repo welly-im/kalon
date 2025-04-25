@@ -11,7 +11,7 @@ export default function HitungDividenDariJumlahLot() {
   const [dividenYield, setDividenYield] = useState("");
 
   const formatNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   const handleJumlahLotChange = (e) => {
@@ -27,9 +27,9 @@ export default function HitungDividenDariJumlahLot() {
   };
 
   useEffect(() => {
-    const lot = parseFloat(jumlahLot.replace(/./g, ""));
-    const dividen = parseFloat(dividenPerLembar.replace(/./g, ""));
-    const harga = parseFloat(hargaPerLembar.replace(/./g, ""));
+    const lot = parseFloat(jumlahLot.replace(/,/g, ""));
+    const dividen = parseFloat(dividenPerLembar.replace(/,/g, ""));
+    const harga = parseFloat(hargaPerLembar.replace(/,/g, ""));
 
     if (!isNaN(lot) && !isNaN(dividen)) {
       const totalDividen = lot * 100 * dividen;

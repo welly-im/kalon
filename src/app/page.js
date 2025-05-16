@@ -10,19 +10,18 @@ import HitungLotDividen from "./pageHitungLotDividen";
 
 const components = {
   Persen,
-  HitungDividenDariJumlahLot,
+  PerubahanPersen,
   HitungDividenDariJumlahLot,
   HitungLotDividen,
   BerapaPersen,
-  PerubahanPersen,
 };
 
 const defaultOrder = [
   "Persen",
+  "PerubahanPersen",
   "HitungDividenDariJumlahLot",
   "HitungLotDividen",
   "BerapaPersen",
-  "PerubahanPersen",
 ];
 
 export default function Home() {

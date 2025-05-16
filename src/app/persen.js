@@ -23,8 +23,12 @@ export default function Persen() {
   };
 
   useEffect(() => {
-    const parseToFloat = (str) =>
-      parseFloat(str.replace(/\./g, "").replace(",", "."));
+    const parseToFloat = (str) => {
+      if (!str) return NaN;
+      const clean = str.replace(/\./g, "").replace(",", ".");
+      const parsed = Number(clean);
+      return isNaN(parsed) ? NaN : parsed;
+    };
     const num1 = parseToFloat(angka1);
     const num2 = parseToFloat(angka2);
     if (!isNaN(num1) && !isNaN(num2)) {

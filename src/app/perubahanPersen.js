@@ -5,7 +5,9 @@ import { useState, useEffect } from "react";
 export default function PerubahanPersen() {
   const [angka1, setAngka1] = useState("");
   const [angka2, setAngka2] = useState("");
+  const [modal, setModal] = useState("");
   const [hasil, setHasil] = useState("");
+  const [hasil2, setHasil2] = useState("");
 
   const formatNumber = (value) => {
     return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -19,21 +21,40 @@ export default function PerubahanPersen() {
     setAngka2(formatNumber(e.target.value));
   };
 
+  const handleModalChange = (e) => {
+    setModal(formatNumber(e.target.value));
+  };
+
   useEffect(() => {
     const num1 = parseFloat(angka1.replace(/,/g, ""));
     const num2 = parseFloat(angka2.replace(/,/g, ""));
     if (!isNaN(num1) && !isNaN(num2) && num1 !== 0) {
-      setHasil((((num2 - num1) / num1) * 100).toLocaleString("en-US") + "%");
+      const persen = ((num2 - num1) / num1) * 100;
+      setHasil(persen.toLocaleString("en-US") + "%");
     } else {
       setHasil("");
     }
   }, [angka1, angka2]);
 
+  useEffect(() => {
+    const modalVal = parseFloat(modal.replace(/,/g, ""));
+    const persen = parseFloat(hasil.replace("%", "").replace(/,/g, ""));
+    if (!isNaN(modalVal) && !isNaN(persen)) {
+      const total = (modalVal * persen) / 100;
+      setHasil2(total.toLocaleString("en-US"));
+    } else {
+      setHasil2("");
+    }
+  }, [modal, hasil]);
+
   const resetForm = () => {
     setAngka1("");
     setAngka2("");
+    setModal("");
     setHasil("");
+    setHasil2("");
   };
+
   return (
     <div className="mt-3 w-100">
       <div
@@ -82,6 +103,31 @@ export default function PerubahanPersen() {
                 Reset
               </button>
             </div>
+
+            {hasil && (
+              <>
+                <div className="d-flex align-items-center justify-content-between my-3">
+                  <p className="my-0 me-3"> Modal </p>
+                  <input
+                    type="text"
+                    className="form-control text-center w-auto"
+                    style={{ maxWidth: "180px", minWidth: "100px" }}
+                    value={modal}
+                    onChange={handleModalChange}
+                  />
+                </div>
+                <div className="d-flex align-items-center justify-content-between my-3">
+                  <p className="my-0 me-3"> Hasil </p>
+                  <input
+                    type="text"
+                    className="form-control text-center w-auto"
+                    style={{ maxWidth: "180px", minWidth: "100px" }}
+                    value={hasil2}
+                    readOnly
+                  />
+                </div>
+              </>
+            )}
           </div>
         </form>
       </div>

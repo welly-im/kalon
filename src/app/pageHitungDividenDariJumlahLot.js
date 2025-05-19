@@ -40,8 +40,14 @@ export default function HitungDividenDariJumlahLot() {
         setModal(totalModal.toLocaleString("en-US"));
 
         if (totalModal > 0) {
-          const yieldPercent = ((totalDividen / totalModal) * 100).toFixed(2);
-          setDividenYield(yieldPercent + "%");
+          const yieldRaw = (totalDividen / totalModal) * 100;
+          const yieldFormatted = Number.isInteger(yieldRaw)
+            ? yieldRaw.toLocaleString("id-ID")
+            : yieldRaw.toLocaleString("id-ID", {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              });
+          setDividenYield(yieldFormatted + "%");
         } else {
           setDividenYield("");
         }

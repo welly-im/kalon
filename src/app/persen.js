@@ -33,11 +33,10 @@ export default function Persen() {
     const num2 = parseToFloat(angka2);
     if (!isNaN(num1) && !isNaN(num2)) {
       const result = (num1 / 100) * num2;
-      const formatted = result
-        .toFixed(2)
-        .toString()
-        .replace(".", ",")
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      let formatted = result.toLocaleString("id-ID", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      });
       setHasil(formatted);
     } else {
       setHasil("");

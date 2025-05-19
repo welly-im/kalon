@@ -61,8 +61,8 @@ export default function Home() {
       className="container d-flex flex-column align-items-center bg-light shadow p-2 bg-body"
       style={{ height: "auto", maxWidth: "430px", margin: "0 auto" }}
     >
-      <h6 className="mt-3">Kalkulator Invest Saham</h6>
-
+      <h6 className="mt-3 m-0">Kalkulator Invest Saham</h6>
+      <span style={{ fontSize: "9pt" }}>v.19052025</span>
       {order.map((key, index) => {
         const Component = components[key];
         if (!Component) return null; // Cegah error jika komponen tidak ditemukan
@@ -98,6 +98,24 @@ export default function Home() {
           </div>
         );
       })}
+      <button
+        className="btn btn-sm btn-danger mt-2"
+        onClick={() => {
+          // Hapus localStorage
+          localStorage.removeItem("componentOrder");
+
+          // Hapus semua cookies
+          document.cookie.split(";").forEach((cookie) => {
+            const name = cookie.split("=")[0].trim();
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+          });
+
+          // Reload halaman
+          window.location.reload();
+        }}
+      >
+        Reset Cache
+      </button>
     </div>
   );
 }

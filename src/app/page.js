@@ -7,6 +7,7 @@ import BerapaPersen from "./pageBerapaPersen";
 import PerubahanPersen from "./perubahanPersen";
 import HitungDividenDariJumlahLot from "./pageHitungDividenDariJumlahLot";
 import HitungLotDividen from "./pageHitungLotDividen";
+import DcaCalculator from "./dcaCalculator";
 
 const components = {
   Persen,
@@ -25,7 +26,9 @@ const defaultOrder = [
 ];
 
 export default function Home() {
+  const [activePage, setActivePage] = useState("home");
   const [order, setOrder] = useState(defaultOrder);
+  const [showMenu, setShowMenu] = useState(false);
 
   // Load urutan dari localStorage
   useEffect(() => {
@@ -58,64 +61,123 @@ export default function Home() {
 
   return (
     <div
-      className="container d-flex flex-column align-items-center bg-light shadow p-2 bg-body"
-      style={{ height: "auto", maxWidth: "430px", margin: "0 auto" }}
+      className="container position-relative p-0"
+      style={{ maxWidth: "430px", margin: "0 auto" }}
     >
-      <h6 className="mt-3 m-0">Kalkulator Invest Saham</h6>
-      <span style={{ fontSize: "9pt" }}>v.19052025</span>
-      {order.map((key, index) => {
-        const Component = components[key];
-        if (!Component) return null; // Cegah error jika komponen tidak ditemukan
-
-        return (
-          <div
-            key={key}
-            className="w-100 mb-2 p-2 bg-white shadow-sm rounded position-relative"
-          >
-            {/* Input untuk mengatur urutan (Pindah ke pojok kiri bawah) */}
-            <input
-              type="number"
-              min="1"
-              max={order.length}
-              value={index + 1}
-              onChange={(e) => handleOrderChange(key, parseInt(e.target.value))}
-              className="position-absolute start-0 m-2 text-center"
-              style={{
-                width: "40px",
-                height: "30px",
-                border: "1px solid #ddd",
-                borderRadius: "5px",
-                background: "#f8f9fa",
-                bottom: "40px",
-                left: "5px !important",
-                zIndex: "10",
-              }}
-            />
-
-            {/* Konten Komponen */}
-            <Component />
-            <hr className="w-100" />
-          </div>
-        );
-      })}
+      {/* Tombol Menu */}
       <button
-        className="btn btn-sm btn-danger mt-2"
-        onClick={() => {
-          // Hapus localStorage
-          localStorage.removeItem("componentOrder");
-
-          // Hapus semua cookies
-          document.cookie.split(";").forEach((cookie) => {
-            const name = cookie.split("=")[0].trim();
-            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-          });
-
-          // Reload halaman
-          window.location.reload();
-        }}
+        className="btn btn-outline-dark position-absolute top-0 end-0 m-2"
+        style={{ zIndex: 1000 }}
+        onClick={() => setShowMenu(!showMenu)}
       >
-        Reset Cache
+        =
       </button>
+
+      {/* Sidebar Menu */}
+      {showMenu && (
+        <div
+          className="position-absolute top-25 bg-white border p-3 bg-light shadow"
+          style={{ width: "200px", zIndex: 999, top: "50px", right: "10px" }}
+        >
+          <ul className="list-unstyled mb-0">
+            <li>
+              <button
+                className="btn btn-link text-start p-0 mb-2"
+                onClick={() => {
+                  setActivePage("home");
+                  setShowMenu(false);
+                }}
+              >
+                <strong>Home</strong>
+              </button>
+            </li>
+            <li>
+              <button
+                className="btn btn-link text-start p-0"
+                onClick={() => {
+                  setActivePage("dca");
+                  setShowMenu(false);
+                }}
+              >
+                <strong>Dollar cost average</strong>
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {/* Konten utama */}
+      <div
+        className="d-flex flex-column align-items-center bg-light shadow p-2 bg-body"
+        style={{ height: "auto" }}
+      >
+        <h6 className="mt-3 m-0">Kalkulator Invest Saham</h6>
+        <span style={{ fontSize: "9pt" }}>v.28052025</span>
+
+        <div
+          style={{
+            display: activePage === "home" ? "block" : "none",
+            width: "100%",
+          }}
+        >
+          {order.map((key, index) => {
+            const Component = components[key];
+            if (!Component) return null;
+
+            return (
+              <div
+                key={key}
+                className="w-100 mb-2 p-2 bg-white shadow-sm rounded position-relative"
+              >
+                <input
+                  type="number"
+                  min="1"
+                  max={order.length}
+                  value={index + 1}
+                  onChange={(e) =>
+                    handleOrderChange(key, parseInt(e.target.value))
+                  }
+                  className="position-absolute start-0 m-2 text-center"
+                  style={{
+                    width: "40px",
+                    height: "30px",
+                    border: "1px solid #ddd",
+                    borderRadius: "5px",
+                    background: "#f8f9fa",
+                    bottom: "40px",
+                    zIndex: "10",
+                  }}
+                />
+                <Component />
+                <hr className="w-100" />
+              </div>
+            );
+          })}
+        </div>
+
+        <div
+          className="w-100 mb-2 p-2"
+          style={{
+            display: activePage === "dca" ? "block" : "none",
+          }}
+        >
+          <DcaCalculator />
+        </div>
+
+        <button
+          className="btn btn-sm btn-danger mt-2"
+          onClick={() => {
+            localStorage.removeItem("componentOrder");
+            document.cookie.split(";").forEach((cookie) => {
+              const name = cookie.split("=")[0].trim();
+              document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+            });
+            window.location.reload();
+          }}
+        >
+          Reset Cache
+        </button>
+      </div>
     </div>
   );
 }

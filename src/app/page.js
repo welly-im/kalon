@@ -27,156 +27,139 @@ const defaultOrder = [
 
 export default function Home() {
   const [activePage, setActivePage] = useState("home");
-  const [order, setOrder] = useState(defaultOrder);
   const [showMenu, setShowMenu] = useState(false);
-
-  // Load urutan dari localStorage
-  useEffect(() => {
-    const savedOrder = localStorage.getItem("componentOrder");
-    if (savedOrder) {
-      setOrder(JSON.parse(savedOrder));
-    }
-  }, []);
-
-  // Simpan ke localStorage setiap kali urutan berubah
-  useEffect(() => {
-    localStorage.setItem("componentOrder", JSON.stringify(order));
-  }, [order]);
-
-  // Update urutan berdasarkan input angka
-  const handleOrderChange = (key, newIndex) => {
-    const newOrder = [...order];
-    const oldIndex = newOrder.indexOf(key);
-
-    // Validasi input
-    if (newIndex < 1 || newIndex > order.length) return;
-
-    // Hapus komponen dari posisi lama
-    newOrder.splice(oldIndex, 1);
-    // Masukkan ke posisi baru
-    newOrder.splice(newIndex - 1, 0, key);
-
-    setOrder(newOrder);
-  };
 
   return (
     <div
       className="container position-relative p-0"
-      style={{ maxWidth: "430px", margin: "0 auto" }}
+      style={{ 
+        maxWidth: "430px", 
+        margin: "0 auto",
+        backgroundColor: "var(--bibit-surface)",
+        minHeight: "100vh",
+        paddingBottom: "100px"
+      }}
     >
-      {/* Tombol Menu */}
-      <button
-        className="btn btn-outline-dark position-absolute top-0 end-0 m-2"
-        style={{ zIndex: 1000 }}
-        onClick={() => setShowMenu(!showMenu)}
+      {/* Header */}
+      <div 
+        className="card-bibit p-4 mb-3"
+        style={{ 
+          borderRadius: "0 0 24px 24px",
+          background: "linear-gradient(135deg, var(--bibit-primary) 0%, var(--bibit-primary-dark) 100%)",
+          border: "none",
+          color: "white"
+        }}
       >
-        =
-      </button>
+        <div className="d-flex justify-content-between align-items-center mb-2">
+          <h5 className="m-0" style={{ fontWeight: "700" }}>Kalkulator Investasi</h5>
+          <button
+            className="btn"
+            style={{ 
+              background: "rgba(255, 255, 255, 0.2)",
+              border: "none",
+              color: "white",
+              borderRadius: "12px",
+              padding: "8px 12px"
+            }}
+            onClick={() => setShowMenu(!showMenu)}
+          >
+            ☰
+          </button>
+        </div>
+        <p className="m-0" style={{ opacity: "0.9", fontSize: "14px" }}>
+          Alat pintar untuk perhitungan investasi saham Anda
+        </p>
+      </div>
 
-      {/* Sidebar Menu */}
+      {/* Menu Dropdown */}
       {showMenu && (
         <div
-          className="position-absolute top-25 bg-white border p-3 bg-light shadow"
-          style={{ width: "200px", zIndex: 999, top: "50px", right: "10px" }}
+          className="position-absolute card-bibit p-3 popup-animated"
+          style={{ 
+            width: "240px", 
+            zIndex: 999, 
+            top: "70px", 
+            right: "16px",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12)",
+            borderRadius: "16px"
+          }}
         >
           <ul className="list-unstyled mb-0">
-            <li>
+            <li className="mb-2">
               <button
-                className="btn btn-link text-start p-0 mb-2"
+                className="btn w-100 text-start p-2"
+                style={{ 
+                  background: activePage === "home" ? "var(--bibit-secondary)" : "transparent",
+                  border: "none",
+                  borderRadius: "12px",
+                  color: "var(--bibit-text-primary)"
+                }}
                 onClick={() => {
                   setActivePage("home");
                   setShowMenu(false);
                 }}
               >
-                <strong>Home</strong>
+                🏠 <strong style={{ marginLeft: "8px" }}>Alat Kalkulator</strong>
               </button>
             </li>
             <li>
               <button
-                className="btn btn-link text-start p-0"
+                className="btn w-100 text-start p-2"
+                style={{ 
+                  background: activePage === "dca" ? "var(--bibit-secondary)" : "transparent",
+                  border: "none",
+                  borderRadius: "12px",
+                  color: "var(--bibit-text-primary)"
+                }}
                 onClick={() => {
                   setActivePage("dca");
                   setShowMenu(false);
                 }}
               >
-                <strong>Dollar cost average</strong>
+                📊 <strong style={{ marginLeft: "8px" }}>Kalkulator DCA</strong>
               </button>
             </li>
           </ul>
         </div>
       )}
 
-      {/* Konten utama */}
-      <div
-        className="d-flex flex-column align-items-center bg-light shadow p-2 bg-body"
-        style={{ height: "auto" }}
-      >
-        <h6 className="mt-3 m-0">Kalkulator Invest Saham</h6>
-        <span style={{ fontSize: "9pt" }}>v.28052025</span>
+      {/* Main Content */}
+      <div className="px-3">{/* Content container */}
 
+        {/* Calculator Tools Section */}
         <div
           style={{
             display: activePage === "home" ? "block" : "none",
             width: "100%",
           }}
         >
-          {order.map((key, index) => {
+          {defaultOrder.map((key, index) => {
             const Component = components[key];
             if (!Component) return null;
 
             return (
               <div
                 key={key}
-                className="w-100 mb-2 p-2 bg-white shadow-sm rounded position-relative"
+                className="card-bibit mb-3 p-4"
+                style={{ border: "1px solid var(--bibit-border)" }}
               >
-                <input
-                  type="number"
-                  min="1"
-                  max={order.length}
-                  value={index + 1}
-                  onChange={(e) =>
-                    handleOrderChange(key, parseInt(e.target.value))
-                  }
-                  className="position-absolute start-0 m-2 text-center"
-                  style={{
-                    width: "40px",
-                    height: "30px",
-                    border: "1px solid #ddd",
-                    borderRadius: "5px",
-                    background: "#f8f9fa",
-                    bottom: "40px",
-                    zIndex: "10",
-                  }}
-                />
                 <Component />
-                <hr className="w-100" />
               </div>
             );
           })}
         </div>
 
+        {/* DCA Calculator Section */}
         <div
-          className="w-100 mb-2 p-2"
+          className="w-100"
           style={{
             display: activePage === "dca" ? "block" : "none",
           }}
         >
-          <DcaCalculator />
+          <div className="card-bibit p-4">
+            <DcaCalculator />
+          </div>
         </div>
-
-        <button
-          className="btn btn-sm btn-danger mt-2"
-          onClick={() => {
-            localStorage.removeItem("componentOrder");
-            document.cookie.split(";").forEach((cookie) => {
-              const name = cookie.split("=")[0].trim();
-              document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-            });
-            window.location.reload();
-          }}
-        >
-          Reset Cache
-        </button>
       </div>
     </div>
   );

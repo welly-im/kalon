@@ -1,16 +1,34 @@
+:root {
+  --bibit-primary: #00b618;
+  --bibit-primary-dark: #00a00d;
+  --bibit-secondary: #F5F5F5;
+  --bibit-background: #FFFFFF;
+  --bibit-surface: #FAFAFA;
+  --bibit-text-primary: #1A1A1A;
+  --bibit-text-secondary: #666666;
+  --bibit-border: #E0E0E0;
+  --bibit-success: #00C896;
+  --bibit-success-light: #E8FCF6;
+  --bibit-warning: #FF9500;
+  --bibit-warning-light: #FFF4E6;
+  --bibit-error: #FF3B30;
+  --bibit-error-light: #FFE8E6;
+}
+
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: #c6c6c6 !important;
+  background-color: var(--bibit-surface);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--bibit-text-primary);
+  background: var(--bibit-background);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 * {
@@ -24,39 +42,94 @@ a {
   text-decoration: none;
 }
 
-/* Animasi saat pop-up muncul (ciri khas Apple) */
+/* Custom Bibit-style components */
+.btn-bibit-primary {
+  background-color: var(--bibit-primary);
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 12px 24px;
+  transition: all 0.2s ease;
+}
+
+.btn-bibit-primary:hover {
+  background-color: var(--bibit-primary-dark);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 200, 150, 0.3);
+}
+
+.btn-bibit-secondary {
+  background-color: var(--bibit-surface);
+  border: 1px solid var(--bibit-border);
+  color: var(--bibit-text-primary);
+  font-weight: 500;
+  border-radius: 12px;
+  padding: 12px 24px;
+  transition: all 0.2s ease;
+}
+
+.btn-bibit-secondary:hover {
+  background-color: var(--bibit-secondary);
+  color: var(--bibit-text-primary);
+  border-color: var(--bibit-primary);
+}
+
+.card-bibit {
+  background: var(--bibit-background);
+  border: 1px solid var(--bibit-border);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.card-bibit:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.input-bibit {
+  border: 1px solid var(--bibit-border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  background-color: var(--bibit-background);
+}
+
+.input-bibit:focus {
+  outline: none;
+  border-color: var(--bibit-primary);
+  box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.1);
+}
+
+/* Smooth animations */
 .popup-animated {
-  animation: popUpApple 0.4s ease-out;
+  animation: slideUpFade 0.3s ease-out;
 }
 
-/* Keyframe untuk animasi pop-up (efek ala Apple) */
-@keyframes popUpApple {
+@keyframes slideUpFade {
   from {
-    transform: translateY(50%) scale(0.9);
+    transform: translateY(20px);
     opacity: 0;
-    border-radius: 15px; /* Sedikit melengkung saat muncul */
   }
   to {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
     opacity: 1;
-    border-radius: 25px; /* Membesar dengan sudut lebih melengkung */
   }
 }
 
-/* Animasi saat pop-up menghilang (ciri khas Apple) */
 .popup-animated-exit {
-  animation: popDownApple 0.3s ease-in;
+  animation: slideDownFade 0.2s ease-in;
 }
 
-@keyframes popDownApple {
+@keyframes slideDownFade {
   from {
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
     opacity: 1;
-    border-radius: 25px; /* Sudut lebih melengkung saat keluar */
   }
   to {
-    transform: translateY(50%) scale(0.9);
+    transform: translateY(20px);
     opacity: 0;
-    border-radius: 15px; /* Kembali sedikit melengkung */
   }
 }

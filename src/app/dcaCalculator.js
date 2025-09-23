@@ -73,144 +73,247 @@ export default function DcaCalculator() {
   const rataRata = totalLot > 0 ? totalHarga / (totalLot * 100) : 0;
 
   return (
-    <div className="mt-3 w-100">
-      <div
-        className="row mb-4 p-3 shadow-sm border-0 rounded"
-        style={{ backgroundColor: "#d4d8de" }}
-      >
-        <div className="col">
-          <label>
-            <strong>Total Lot</strong>
-          </label>
-          <input
-            type="text"
-            className="form-control border border-dark"
-            value={formatNumber(totalLot)}
-            readOnly
-          />
+    <div className="w-100">
+      <div className="mb-4">
+        <h5 className="mb-3" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
+          💹 Kalkulator Dollar Cost Averaging (DCA)
+        </h5>
+        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "14px", marginBottom: "16px" }}>
+          Lacak pembelian investasi Anda dan hitung harga rata-rata
+        </p>
+        <div 
+          className="p-3" 
+          style={{ 
+            backgroundColor: "var(--bibit-surface)", 
+            borderLeft: "4px solid var(--bibit-primary)",
+            borderRadius: "8px",
+            marginBottom: "24px"
+          }}
+        >
+          <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
+            💡 <strong>Tips:</strong> DCA membantu mengurangi risiko volatilitas dengan membeli saham secara rutin dalam jumlah tetap, sehingga Anda membeli lebih banyak saat harga turun dan lebih sedikit saat harga naik.
+          </small>
         </div>
-        <div className="col">
-          <label>
-            <strong>Harga rata rata</strong>
-          </label>
-          <input
-            type="text"
-            className="form-control border border-dark"
-            value={formatNumber(rataRata.toFixed(2))}
-            readOnly
-          />
+      </div>
+
+      {/* Summary Cards */}
+      <div className="mb-4">
+        <div className="row g-2 mb-3">
+          <div className="col-6">
+            <div 
+              className="text-center p-3"
+              style={{ 
+                backgroundColor: "var(--bibit-surface)",
+                border: "1px solid var(--bibit-border)",
+                borderRadius: "12px",
+                minHeight: "80px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center"
+              }}
+            >
+              <div style={{ color: "var(--bibit-text-secondary)", fontSize: "11px", marginBottom: "4px" }}>
+                Total Lot
+              </div>
+              <div style={{ color: "var(--bibit-text-primary)", fontSize: "16px", fontWeight: "700" }}>
+                {formatNumber(totalLot)}
+              </div>
+            </div>
+          </div>
+          <div className="col-6">
+            <div 
+              className="text-center p-3"
+              style={{ 
+                backgroundColor: "var(--bibit-surface)",
+                border: "1px solid var(--bibit-border)",
+                borderRadius: "12px",
+                minHeight: "80px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center"
+              }}
+            >
+              <div style={{ color: "var(--bibit-text-secondary)", fontSize: "11px", marginBottom: "4px" }}>
+                Harga Rata-rata
+              </div>
+              <div style={{ color: "var(--bibit-primary)", fontSize: "16px", fontWeight: "700" }}>
+                Rp {formatNumber(rataRata.toFixed(0))}
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="row mt-2">
-          <div className="col">
-            <label>
-              <strong>Modal</strong>
-            </label>
-            <input
-              type="text"
-              className="form-control border border-dark w-100"
-              value={formatNumber(totalHarga.toFixed(2))}
-              readOnly
-            />
+        <div className="row">
+          <div className="col-12">
+            <div 
+              className="text-center p-3"
+              style={{ 
+                backgroundColor: "var(--bibit-surface)",
+                border: "1px solid var(--bibit-primary)",
+                borderRadius: "12px",
+                minHeight: "80px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center"
+              }}
+            >
+              <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "4px" }}>
+                Total Modal Investasi
+              </div>
+              <div style={{ color: "var(--bibit-primary)", fontSize: "20px", fontWeight: "700" }}>
+                Rp {formatNumber(Math.round(totalHarga))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="row mb-3">
-        <div className="col-4">
-          <input
-            type="text"
-            placeholder="Lot"
-            className="form-control border border-dark"
-            value={lot}
-            onChange={(e) => setLot(e.target.value)}
-          />
+      {/* Input Form */}
+      <div className="mb-4">
+        <div className="mb-3">
+          <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-primary)", fontWeight: "600", marginBottom: "8px" }}>
+            📊 Input Pembelian Baru
+          </label>
         </div>
-        <div className="col">
-          <input
-            type="text"
-            placeholder="Harga"
-            className="form-control border border-dark"
-            value={harga}
-            onChange={(e) => setHarga(e.target.value)}
-          />
-        </div>
-      </div>
-
-      {parseNumber(lot) > 0 && parseNumber(harga) > 0 && (
-        <div className="row mb-3">
-          <div className="col">
-            <label>
-              <strong>Total Harga</strong>
-            </label>
+        <div className="row g-2 mb-3">
+          <div className="col-5">
             <input
               type="text"
-              className="form-control border border-dark"
-              value={formatNumber(
-                (parseNumber(lot) * 100 * parseNumber(harga)).toFixed(2)
-              )}
-              readOnly
+              placeholder="1"
+              className="input-bibit w-100"
+              value={lot}
+              onChange={(e) => setLot(e.target.value)}
+              style={{ textAlign: "center", fontSize: "16px" }}
             />
+            <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px", display: "block", textAlign: "center", marginTop: "4px" }}>
+              Jumlah lot
+            </small>
+          </div>
+          <div className="col-7">
+            <input
+              type="text"
+              placeholder="4500"
+              className="input-bibit w-100"
+              value={harga}
+              onChange={(e) => setHarga(e.target.value)}
+              style={{ fontSize: "16px" }}
+            />
+            <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px", display: "block", marginTop: "4px" }}>
+              Harga per lembar (Rp)
+            </small>
+          </div>
+        </div>        {parseNumber(lot) > 0 && parseNumber(harga) > 0 && (
+          <div className="mb-3">
+            <div 
+              className="p-3 text-center"
+              style={{ 
+                backgroundColor: "rgba(0, 200, 150, 0.1)",
+                border: "1px solid var(--bibit-primary)",
+                borderRadius: "12px"
+              }}
+            >
+              <div style={{ color: "var(--bibit-text-secondary)", fontSize: "11px" }}>
+                💰 Total Pembelian
+              </div>
+              <div style={{ color: "var(--bibit-primary)", fontSize: "18px", fontWeight: "700" }}>
+                Rp {formatNumber(Math.round(parseNumber(lot) * 100 * parseNumber(harga)))}
+              </div>
+              <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+                ({formatNumber(parseNumber(lot))} lot × 100 × Rp {formatNumber(parseNumber(harga))})
+              </small>
+            </div>
+          </div>
+        )}
+
+        <div className="row g-2">
+          <div className="col-8">
+            <button
+              className="btn-bibit-primary w-100"
+              onClick={handleTambah}
+              disabled={!parseNumber(lot) || !parseNumber(harga)}
+              style={{ 
+                opacity: (!parseNumber(lot) || !parseNumber(harga)) ? 0.5 : 1,
+                fontSize: "14px",
+                fontWeight: "600"
+              }}
+            >
+              ➕ Tambah Pembelian
+            </button>
+          </div>
+          <div className="col-4">
+            <button
+              className="btn-bibit-secondary w-100"
+              onClick={handleReset}
+              style={{ fontSize: "12px" }}
+            >
+              🔄 Reset
+            </button>
           </div>
         </div>
-      )}
-
-      <div className="row mb-3">
-        <div className="col">
-          <button
-            className="btn btn-outline-success border border-dark w-100"
-            onClick={handleTambah}
-          >
-            Tambah Pembelian
-          </button>
-        </div>
       </div>
 
-      <div className="row mb-3">
-        <div className="col-4">
-          <button
-            className="btn btn-outline-warning fw-bold border border-dark w-100"
-            onClick={handleReset}
-          >
-            Reset
-          </button>
-        </div>
-      </div>
-
+      {/* Purchase History */}
       {pembelianList.length > 0 && (
-        <div className="row mt-4">
-          <div className="col">
-            <h5>History Pembelian</h5>
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Lot</th>
-                  <th>Harga</th>
-                  <th>Total Harga</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {pembelianList.map((item, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{formatNumber(item.lot)}</td>
-                    <td>{formatNumber(item.harga)}</td>
-                    <td>
-                      {formatNumber((item.lot * 100 * item.harga).toFixed(2))}
-                    </td>
-                    <td>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleHapus(index)}
-                      >
-                        X
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="mt-4">
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h6 className="mb-0" style={{ color: "var(--bibit-text-primary)", fontWeight: "600" }}>
+              📋 Riwayat Pembelian ({pembelianList.length})
+            </h6>
+          </div>
+          <div className="d-flex flex-column gap-2">
+            {pembelianList.map((item, index) => (
+              <div
+                key={index}
+                className="p-3"
+                style={{
+                  backgroundColor: "var(--bibit-surface)",
+                  border: "1px solid var(--bibit-border)",
+                  borderRadius: "12px"
+                }}
+              >
+                <div className="d-flex justify-content-between align-items-start">
+                  <div className="d-flex align-items-center gap-3 flex-grow-1">
+                    <div
+                      className="d-flex align-items-center justify-content-center flex-shrink-0"
+                      style={{
+                        width: "28px",
+                        height: "28px",
+                        backgroundColor: "var(--bibit-primary)",
+                        color: "white",
+                        borderRadius: "6px",
+                        fontSize: "11px",
+                        fontWeight: "700"
+                      }}
+                    >
+                      {index + 1}
+                    </div>
+                    <div className="flex-grow-1">
+                      <div style={{ color: "var(--bibit-text-primary)", fontWeight: "600", fontSize: "13px", marginBottom: "2px" }}>
+                        {formatNumber(item.lot)} lot @ Rp {formatNumber(item.harga)}
+                      </div>
+                      <div style={{ color: "var(--bibit-text-secondary)", fontSize: "11px" }}>
+                        Total: Rp {formatNumber(Math.round(item.lot * 100 * item.harga))}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className="btn btn-sm flex-shrink-0"
+                    onClick={() => handleHapus(index)}
+                    style={{
+                      background: "var(--bibit-error)",
+                      border: "none",
+                      color: "white",
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "6px",
+                      fontSize: "10px",
+                      marginLeft: "8px"
+                    }}
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}

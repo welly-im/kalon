@@ -36,51 +36,99 @@ export default function BerapaPersen() {
   };
 
   return (
-    <div className="mt-3 w-100">
-      <div
-        className="form-wrapper card p-3 shadow-sm border-0"
-        style={{ backgroundColor: "#d4d8de" }}
-      >
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="mb-5">
-            <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3"> Berapa % </p>
+    <div className="w-100">
+      <div className="mb-3">
+        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
+          🧮 Berapa Persen
+        </h6>
+        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
+          Cari tahu berapa persen satu angka dari angka lainnya
+        </p>
+        <div 
+          className="p-3" 
+          style={{ 
+            backgroundColor: "var(--bibit-surface)", 
+            borderLeft: "4px solid var(--bibit-primary)",
+            borderRadius: "8px",
+            marginBottom: "16px"
+          }}
+        >
+          <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
+            💡 <strong>Contoh:</strong> 500.000 adalah berapa % dari 2.000.000? = 25%. Berguna untuk menghitung alokasi portfolio.
+          </small>
+        </div>
+      </div>
+
+      <form onSubmit={(e) => e.preventDefault()}>
+        <div className="mb-4">
+          <div className="mb-3">
+            <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-primary)", fontWeight: "600", marginBottom: "8px" }}>
+              🤔 Berapa persen adalah...
+            </label>
+          </div>
+          <div className="row g-3 mb-3">
+            <div className="col-12">
+              <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
+                💰 Jumlah yang ingin dihitung
+              </label>
               <input
                 type="text"
-                className="form-control text-center w-auto"
-                style={{ maxWidth: "180px", minWidth: "100px" }}
+                className="input-bibit w-100"
+                placeholder="500.000"
                 value={angka1}
                 onChange={handleAngka1Change}
+                style={{ fontSize: "16px" }}
               />
+              <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+                Nilai yang ingin diketahui persentasenya
+              </small>
             </div>
-            <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3">dari</p>
+            <div className="col-12">
+              <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
+                📊 Dari total keseluruhan
+              </label>
               <input
                 type="text"
-                className="form-control text-center w-auto"
-                style={{ maxWidth: "180px", minWidth: "100px" }}
+                className="input-bibit w-100"
+                placeholder="2.000.000"
                 value={angka2}
                 onChange={handleAngka2Change}
+                style={{ fontSize: "16px" }}
               />
-            </div>
-            <div className="d-flex align-items-center justify-content-between my-3">
-              <input
-                type="text"
-                className="form-control text-center bg-light"
-                value={hasil}
-                readOnly
-              />
-              <button
-                type="button"
-                className="btn btn-secondary ms-3"
-                onClick={resetForm}
-              >
-                Reset
-              </button>
+              <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+                Total nilai keseluruhan sebagai pembanding
+              </small>
             </div>
           </div>
-        </form>
-      </div>
+          
+          {hasil && (
+            <div 
+              className="p-3 text-center mb-3"
+              style={{ 
+                backgroundColor: "var(--bibit-surface)",
+                border: "1px solid var(--bibit-primary)",
+                borderRadius: "12px"
+              }}
+            >
+              <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
+                Hasil
+              </div>
+              <div style={{ color: "var(--bibit-primary)", fontSize: "20px", fontWeight: "700" }}>
+                {hasil}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="btn-bibit-secondary"
+          onClick={resetForm}
+          style={{ width: "80px" }}
+        >
+          Reset
+        </button>
+      </form>
     </div>
   );
 }

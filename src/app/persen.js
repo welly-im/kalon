@@ -50,52 +50,90 @@ export default function Persen() {
   };
 
   return (
-    <div className="mt-2 w-100">
-      <div
-        className="form-wrapper card p-3 shadow-sm border-0"
-        style={{ backgroundColor: "#d4d8de" }}
-      >
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="row align-items-center mb-3">
-            <div className="col-5 d-flex align-items-center justify-content-end p-0">
+    <div className="w-100">
+      <div className="mb-3">
+        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
+          📊 Kalkulator Persentase
+        </h6>
+        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
+          Hitung berapa persen dari suatu angka
+        </p>
+        <div 
+          className="p-3" 
+          style={{ 
+            backgroundColor: "var(--bibit-surface)", 
+            borderLeft: "4px solid var(--bibit-primary)",
+            borderRadius: "8px",
+            marginBottom: "16px"
+          }}
+        >
+          <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
+            💡 <strong>Contoh:</strong> 10% dari 1.000.000 = 100.000. Berguna untuk menghitung keuntungan, dividen, atau komisi.
+          </small>
+        </div>
+      </div>
+
+      <form onSubmit={(e) => e.preventDefault()}>
+        <div className="mb-4">
+          <div className="mb-3">
+            <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600", marginBottom: "8px" }}>
+              📊 Persentase (%)
+            </label>
+            <div className="d-flex align-items-center gap-2">
               <input
                 type="text"
-                className="form-control text-center"
-                style={{ width: "80px" }}
+                className="input-bibit text-center"
+                placeholder="10"
                 value={angka1}
                 onChange={handleAngka1Change}
+                style={{ fontSize: "16px", width: "100px" }}
               />
-              <p className=" ms-2 mb-0">%</p>
-              <p className="mx-2 mb-0"> dari </p>
-            </div>
-            <div className="col-7 d-flex align-items-center justify-content-start p-0">
-              <input
-                type="text"
-                className="form-control text-center"
-                style={{ maxWidth: "220px", minWidth: "100px" }}
-                value={angka2}
-                onChange={handleAngka2Change}
-              />
+              <span style={{ color: "var(--bibit-text-primary)", fontWeight: "600", fontSize: "16px" }}>%</span>
             </div>
           </div>
-          <div className="d-flex align-items-center justify-content-center p-0 mb-4">
-            <p className="fw-bold mx-2 mb-0"> = </p>
+          
+          <div className="mb-3">
+            <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600", marginBottom: "8px" }}>
+              💰 Dari Jumlah Total
+            </label>
             <input
               type="text"
-              className="form-control text-center bg-light"
-              value={hasil}
-              readOnly
+              className="input-bibit w-100"
+              placeholder="1.000.000"
+              value={angka2}
+              onChange={handleAngka2Change}
+              style={{ fontSize: "16px" }}
             />
-            <button
-              type="button"
-              className="btn btn-secondary ms-3"
-              onClick={resetForm}
-            >
-              Reset
-            </button>
           </div>
-        </form>
-      </div>
+
+          {hasil && (
+            <div 
+              className="p-3 text-center mb-3"
+              style={{ 
+                backgroundColor: "var(--bibit-surface)",
+                border: "1px solid var(--bibit-primary)",
+                borderRadius: "12px"
+              }}
+            >
+              <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "4px" }}>
+                Hasil
+              </div>
+              <div style={{ color: "var(--bibit-primary)", fontSize: "20px", fontWeight: "700" }}>
+                Rp {hasil}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="btn-bibit-secondary"
+          onClick={resetForm}
+          style={{ width: "80px" }}
+        >
+          Reset
+        </button>
+      </form>
     </div>
   );
 }

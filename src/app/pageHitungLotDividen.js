@@ -72,93 +72,152 @@ export default function HitungLotDividen() {
   };
 
   return (
-    <div className="mt-3 w-100">
-      <div
-        className="form-wrapper card p-3 shadow-sm border-0"
-        style={{ backgroundColor: "#d4d8de" }}
-      >
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="mb-2">
-            <p className="mx-0 mb-0">
-              {" "}
-              Hitung jumlah lot dan dividen dari modal{" "}
-            </p>
-            <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3"> Modal </p>
+    <div className="w-100">
+      <div className="mb-3">
+        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
+          🎯 Kalkulator Lot dari Modal
+        </h6>
+        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
+          Hitung berapa lot yang bisa dibeli dan estimasi dividen dari modal investasi
+        </p>
+        <div 
+          className="p-3" 
+          style={{ 
+            backgroundColor: "var(--bibit-surface)", 
+            borderLeft: "4px solid var(--bibit-primary)",
+            borderRadius: "8px",
+            marginBottom: "16px"
+          }}
+        >
+          <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
+            💡 <strong>Tips:</strong> Diversifikasi portofolio dengan membagi modal ke beberapa saham. Jangan taruh semua telur dalam satu keranjang.
+          </small>
+        </div>
+      </div>
+
+      <form onSubmit={(e) => e.preventDefault()}>
+        <div className="mb-4">
+          <div className="mb-3">
+            <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
+              💰 Modal Investasi
+            </label>
+            <input
+              type="text"
+              className="input-bibit w-100"
+              placeholder="10.000.000"
+              value={modal}
+              onChange={handleModalChange}
+              style={{ fontSize: "16px" }}
+            />
+            <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+              Jumlah uang yang akan diinvestasikan (Rupiah)
+            </small>
+          </div>
+          
+          <div className="row g-3 mb-3">
+            <div className="col-12 col-sm-6">
+              <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
+                💸 Harga per Lembar
+              </label>
               <input
                 type="text"
-                className="form-control text-center w-auto"
-                style={{ maxWidth: "180px", minWidth: "100px" }}
-                value={modal}
-                onChange={handleModalChange}
-              />
-            </div>
-            <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3"> Harga / lembar </p>
-              <input
-                type="text"
-                className="form-control text-center w-auto"
-                style={{ maxWidth: "180px", minWidth: "100px" }}
+                className="input-bibit w-100"
+                placeholder="4.500"
                 value={hargaPerLembar}
                 onChange={handleHargaPerLembarChange}
+                style={{ fontSize: "16px" }}
               />
+              <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+                Harga saham saat ini
+              </small>
             </div>
-            <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3"> Dividen / lembar </p>
+            <div className="col-12 col-sm-6">
+              <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
+                📊 Dividen per Lembar
+              </label>
               <input
                 type="text"
-                className="form-control text-center w-auto"
-                style={{ maxWidth: "180px", minWidth: "100px" }}
+                className="input-bibit w-100"
+                placeholder="150"
                 value={dividenPerLembar}
                 onChange={handleDividenPerLembarChange}
+                style={{ fontSize: "16px" }}
               />
+              <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+                Estimasi dividen tahunan
+              </small>
             </div>
-            <div className="d-flex justify-content-end">
-              <button
-                type="button"
-                className="btn btn-secondary ms-3"
-                onClick={resetForm}
-              >
-                Reset
-              </button>
-            </div>
-            {dividenTotal && (
-              <>
-                <div className="d-flex align-items-center justify-content-between my-3">
-                  <p className="my-0 me-3"> Jumlah lot </p>
-                  <input
-                    type="text"
-                    className="form-control text-center w-auto"
-                    style={{ maxWidth: "180px", minWidth: "100px" }}
-                    value={jumlahLot}
-                    readOnly
-                  />
-                </div>
-                <div className="d-flex align-items-center justify-content-between my-3">
-                  <p className="my-0 me-3"> Total Dividen </p>
-                  <input
-                    type="text"
-                    className="form-control text-center w-auto"
-                    style={{ maxWidth: "180px", minWidth: "100px" }}
-                    value={dividenTotal}
-                    readOnly
-                  />
-                </div>
-                <div className="d-flex align-items-center justify-content-between my-3">
-                  <p className="my-0 me-3"> Dividen Yield </p>
-                  <input
-                    type="text"
-                    className="form-control text-center w-auto"
-                    style={{ maxWidth: "180px", minWidth: "100px" }}
-                    value={dividenYield}
-                    readOnly
-                  />
-                </div>
-              </>
-            )}
           </div>
-        </form>
-      </div>
+
+          {jumlahLot && (
+            <>
+              <div 
+                className="p-3 text-center mb-3"
+                style={{ 
+                  backgroundColor: "var(--bibit-surface)",
+                  border: "1px solid var(--bibit-primary)",
+                  borderRadius: "12px"
+                }}
+              >
+                <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
+                  Jumlah Lot Tersedia
+                </div>
+                <div style={{ color: "var(--bibit-primary)", fontSize: "20px", fontWeight: "700" }}>
+                  {jumlahLot} lot
+                </div>
+              </div>
+
+              {dividenTotal && dividenYield && (
+                <div className="row g-3 mb-3">
+                  <div className="col-12 col-sm-6">
+                    <div 
+                      className="p-3 text-center"
+                      style={{ 
+                        backgroundColor: "var(--bibit-surface)",
+                        border: "1px solid var(--bibit-success)",
+                        borderRadius: "12px"
+                      }}
+                    >
+                      <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "4px" }}>
+                        💰 Total Dividen Tahunan
+                      </div>
+                      <div style={{ color: "var(--bibit-success)", fontSize: "16px", fontWeight: "700" }}>
+                        Rp {dividenTotal}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 col-sm-6">
+                    <div 
+                      className="p-3 text-center"
+                      style={{ 
+                        backgroundColor: "var(--bibit-surface)",
+                        border: "1px solid var(--bibit-primary)",
+                        borderRadius: "12px"
+                      }}
+                    >
+                      <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "4px" }}>
+                        📈 Dividend Yield
+                      </div>
+                      <div style={{ color: "var(--bibit-primary)", fontSize: "16px", fontWeight: "700" }}>
+                        {dividenYield}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="btn-bibit-secondary"
+          onClick={resetForm}
+          style={{ width: "80px" }}
+        >
+          Reset
+        </button>
+      </form>
     </div>
   );
 }

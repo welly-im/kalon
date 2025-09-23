@@ -56,81 +56,142 @@ export default function PerubahanPersen() {
   };
 
   return (
-    <div className="mt-3 w-100">
-      <div
-        className="form-wrapper card p-3 shadow-sm border-0"
-        style={{ backgroundColor: "#d4d8de" }}
-      >
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className="mb-2">
-            <p className="mx-0 mb-0"> Perubahan persentase </p>
-            <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3"> dari</p>
+    <div className="w-100">
+      <div className="mb-3">
+        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
+          📈 Perubahan Persentase
+        </h6>
+        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
+          Hitung perubahan persentase antara dua nilai
+        </p>
+        <div 
+          className="p-3" 
+          style={{ 
+            backgroundColor: "var(--bibit-surface)", 
+            borderLeft: "4px solid var(--bibit-primary)",
+            borderRadius: "8px",
+            marginBottom: "16px"
+          }}
+        >
+          <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
+            💡 <strong>Contoh:</strong> Harga saham naik dari Rp 4.000 ke Rp 4.400 = +10%. Berguna untuk analisis performa investasi.
+          </small>
+        </div>
+      </div>
+
+      <form onSubmit={(e) => e.preventDefault()}>
+        <div className="mb-4">
+          <div className="row g-3 mb-3">
+            <div className="col-12 col-sm-6">
+              <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
+                💰 Nilai Awal
+              </label>
               <input
                 type="text"
-                className="form-control text-center w-auto"
-                style={{ maxWidth: "180px", minWidth: "100px" }}
+                className="input-bibit w-100"
+                placeholder="4.000"
                 value={angka1}
                 onChange={handleAngka1Change}
+                style={{ fontSize: "16px" }}
               />
+              <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+                Harga/nilai sebelumnya
+              </small>
             </div>
-            <div className="d-flex align-items-center justify-content-between my-2">
-              <p className="my-0 me-3"> ke </p>
+            <div className="col-12 col-sm-6">
+              <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
+                📊 Nilai Akhir
+              </label>
               <input
                 type="text"
-                className="form-control text-center w-auto"
-                style={{ maxWidth: "180px", minWidth: "100px" }}
+                className="input-bibit w-100"
+                placeholder="4.400"
                 value={angka2}
                 onChange={handleAngka2Change}
+                style={{ fontSize: "16px" }}
               />
+              <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+                Harga/nilai saat ini
+              </small>
             </div>
-            <div className="d-flex align-items-center justify-content-between my-3">
-              <p className="my-0 me-3"> berapa % </p>
-              <input
-                type="text"
-                className="form-control text-center w-auto"
-                style={{ maxWidth: "180px", minWidth: "100px" }}
-                value={hasil}
-                readOnly
-              />
-            </div>
-            <div className="d-flex justify-content-end">
-              <button
-                type="button"
-                className="btn btn-secondary ms-3"
-                onClick={resetForm}
-              >
-                Reset
-              </button>
-            </div>
-
-            {hasil && (
-              <>
-                <div className="d-flex align-items-center justify-content-between my-3">
-                  <p className="my-0 me-3"> Modal </p>
-                  <input
-                    type="text"
-                    className="form-control text-center w-auto"
-                    style={{ maxWidth: "180px", minWidth: "100px" }}
-                    value={modal}
-                    onChange={handleModalChange}
-                  />
-                </div>
-                <div className="d-flex align-items-center justify-content-between my-3">
-                  <p className="my-0 me-3"> Hasil </p>
-                  <input
-                    type="text"
-                    className="form-control text-center w-auto"
-                    style={{ maxWidth: "180px", minWidth: "100px" }}
-                    value={hasil2}
-                    readOnly
-                  />
-                </div>
-              </>
-            )}
           </div>
-        </form>
-      </div>
+          
+          {hasil && (
+            <div 
+              className="p-3 text-center mb-3"
+              style={{ 
+                backgroundColor: "var(--bibit-surface)",
+                border: "1px solid var(--bibit-primary)",
+                borderRadius: "12px"
+              }}
+            >
+              <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
+                Perubahan Persentase
+              </div>
+              <div style={{ 
+                color: hasil.includes('-') ? "var(--bibit-error)" : "var(--bibit-success)", 
+                fontSize: "20px", 
+                fontWeight: "700" 
+              }}>
+                {hasil}
+              </div>
+            </div>
+          )}
+
+          {hasil && (
+            <div className="row g-3 mb-3">
+              <div className="col-12">
+                <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
+                  💵 Jumlah Investasi (Opsional)
+                </label>
+                <input
+                  type="text"
+                  className="input-bibit w-100"
+                  placeholder="10.000.000"
+                  value={modal}
+                  onChange={handleModalChange}
+                  style={{ fontSize: "16px" }}
+                />
+                <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
+                  Masukkan jumlah untuk menghitung untung/rugi
+                </small>
+              </div>
+              {hasil2 && (
+                <div className="col-12">
+                  <div 
+                    className="p-3 text-center"
+                    style={{ 
+                      backgroundColor: hasil2.includes('-') ? "var(--bibit-error-light)" : "var(--bibit-success-light)",
+                      border: `1px solid ${hasil2.includes('-') ? "var(--bibit-error)" : "var(--bibit-success)"}`,
+                      borderRadius: "12px"
+                    }}
+                  >
+                    <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "4px" }}>
+                      💰 {hasil2.includes('-') ? 'Kerugian' : 'Keuntungan'}
+                    </div>
+                    <div style={{ 
+                      color: hasil2.includes('-') ? "var(--bibit-error)" : "var(--bibit-success)", 
+                      fontSize: "18px", 
+                      fontWeight: "700" 
+                    }}>
+                      Rp {hasil2}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="btn-bibit-secondary"
+          onClick={resetForm}
+          style={{ width: "80px" }}
+        >
+          Reset
+        </button>
+      </form>
     </div>
   );
 }

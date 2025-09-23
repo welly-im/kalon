@@ -8,6 +8,7 @@ import PerubahanPersen from "./perubahanPersen";
 import HitungDividenDariJumlahLot from "./pageHitungDividenDariJumlahLot";
 import HitungLotDividen from "./pageHitungLotDividen";
 import DcaCalculator from "./dcaCalculator";
+import IpoAraArbCalculator from "./ipoAraArbCalculator";
 
 const components = {
   Persen,
@@ -76,7 +77,7 @@ export default function Home() {
         <div
           className="position-absolute card-bibit p-3 popup-animated"
           style={{ 
-            width: "240px", 
+            width: "340px", 
             zIndex: 999, 
             top: "70px", 
             right: "16px",
@@ -119,6 +120,23 @@ export default function Home() {
                 📊 <strong style={{ marginLeft: "8px" }}>Kalkulator DCA</strong>
               </button>
             </li>
+                <li className="mt-2">
+                  <button
+                    className="btn w-100 text-start p-2"
+                    style={{ 
+                      background: activePage === "ipo" ? "var(--bibit-secondary)" : "transparent",
+                      border: "none",
+                      borderRadius: "12px",
+                      color: "var(--bibit-text-primary)"
+                    }}
+                    onClick={() => {
+                      setActivePage("ipo");
+                      setShowMenu(false);
+                    }}
+                  >
+                    🧾 <strong style={{ marginLeft: "8px" }}>Kalkulator ARA/ARB</strong>
+                  </button>
+                </li>
           </ul>
         </div>
       )}
@@ -158,6 +176,18 @@ export default function Home() {
         >
           <div className="card-bibit p-4">
             <DcaCalculator />
+          </div>
+        </div>
+
+        {/* IPO ARA/ARB Calculator Section */}
+        <div
+          className="w-100"
+          style={{
+            display: activePage === "ipo" ? "block" : "none",
+          }}
+        >
+          <div className="card-bibit p-4">
+            <IpoAraArbCalculator />
           </div>
         </div>
       </div>

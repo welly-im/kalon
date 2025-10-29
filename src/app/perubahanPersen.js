@@ -8,6 +8,7 @@ export default function PerubahanPersen() {
   const [modal, setModal] = useState("");
   const [hasil, setHasil] = useState("");
   const [hasil2, setHasil2] = useState("");
+  const [hasil3, setHasil3] = useState("");
 
   const formatNumber = (value) => {
     return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -42,8 +43,10 @@ export default function PerubahanPersen() {
     if (!isNaN(modalVal) && !isNaN(persen)) {
       const total = (modalVal * persen) / 100;
       setHasil2(total.toLocaleString("en-US"));
+      setHasil3((total + modalVal).toLocaleString("en-US"));
     } else {
       setHasil2("");
+      setHasil3("");
     }
   }, [modal, hasil]);
 
@@ -53,6 +56,7 @@ export default function PerubahanPersen() {
     setModal("");
     setHasil("");
     setHasil2("");
+    setHasil3("");
   };
 
   return (
@@ -159,7 +163,7 @@ export default function PerubahanPersen() {
               {hasil2 && (
                 <div className="col-12">
                   <div 
-                    className="p-3 text-center"
+                    className="p-2 text-center"
                     style={{ 
                       backgroundColor: hasil2.includes('-') ? "var(--bibit-error-light)" : "var(--bibit-success-light)",
                       border: `1px solid ${hasil2.includes('-') ? "var(--bibit-error)" : "var(--bibit-success)"}`,
@@ -175,6 +179,31 @@ export default function PerubahanPersen() {
                       fontWeight: "700" 
                     }}>
                       Rp {hasil2}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {hasil3 && (
+                <div className="col-12">
+                   <div 
+                      className="p-3 text-center"
+                      style={{ 
+                        backgroundColor: "var(--bibit-surface)",
+                        border: "2px solid var(--bibit-primary)",
+                        borderRadius: "16px",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.05)"
+                      }}
+                    >
+                    <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "4px" }}>
+                      💰 {hasil3.includes('-') ? 'Asset jadi' : 'Total Nilai Asset'}
+                    </div>
+                    <div style={{ 
+                      color: hasil3.includes('-') ? "var(--bibit-error)" : "var(--bibit-primary)", 
+                      fontSize: "18px", 
+                      fontWeight: "700" 
+                    }}>
+                      Rp {hasil3}
                     </div>
                   </div>
                 </div>

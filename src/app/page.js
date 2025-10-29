@@ -68,7 +68,7 @@ export default function Home() {
           </button>
         </div>
         <p className="m-0" style={{ opacity: "0.9", fontSize: "14px" }}>
-          Alat untuk perhitungan investasi saham Anda v.23092025
+          Alat untuk perhitungan investasi saham Anda v.29102025
         </p>
       </div>
 

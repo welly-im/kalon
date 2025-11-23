@@ -6,6 +6,7 @@ export default function Persen() {
   const [angka1, setAngka1] = useState("");
   const [angka2, setAngka2] = useState("");
   const [hasil, setHasil] = useState("");
+  const [invest, setInvest] = useState("");
 
   const formatNumber = (value) => {
     let clean = value.replace(/[^\d,]/g, "").replace(",", ".");
@@ -33,13 +34,20 @@ export default function Persen() {
     const num2 = parseToFloat(angka2);
     if (!isNaN(num1) && !isNaN(num2)) {
       const result = (num1 / 100) * num2;
-      let formatted = result.toLocaleString("id-ID", {
+      const formatted = result.toLocaleString("id-ID", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      });
+      const investValue = result + num2;
+      const investFormatted = investValue.toLocaleString("id-ID", {
         minimumFractionDigits: 0,
         maximumFractionDigits: 2,
       });
       setHasil(formatted);
+      setInvest(investFormatted);
     } else {
       setHasil("");
+      setInvest("");
     }
   }, [angka1, angka2]);
 
@@ -47,6 +55,7 @@ export default function Persen() {
     setAngka1("");
     setAngka2("");
     setHasil("");
+    setInvest("");
   };
 
   return (
@@ -121,6 +130,16 @@ export default function Persen() {
               <div style={{ color: "var(--bibit-primary)", fontSize: "20px", fontWeight: "700" }}>
                 Rp {hasil}
               </div>
+              {invest && (
+                <>
+                  <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", margin: "12px 0 4px" }}>
+                    Nilai Invest (Modal + Hasil)
+                  </div>
+                  <div style={{ color: "var(--bibit-primary)", fontSize: "20px", fontWeight: "700" }}>
+                    Rp {invest}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>

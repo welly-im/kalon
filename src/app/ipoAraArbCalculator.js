@@ -82,11 +82,8 @@ export default function IpoAraArbCalculator() {
       <div className="mb-4">
         <div className="d-flex justify-content-between align-items-start">
           <div>
-            <h5 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: 700 }}>
-              📈 Kalkulator ARA/ARB IPO (IDX)
-            </h5>
-            <p style={{ color: "var(--bibit-text-secondary)", fontSize: "14px", marginBottom: 0 }}>
-              Masukkan jumlah lot penjatahan dan harga penawaran (IPO). Lihat skenario 5x ARA (+25%/langkah) dan 5x ARB (-25%/langkah), serta estimasi nilai saat ini.
+            <p style={{ color: "var(--bibit-text-secondary)", fontSize: "14px", marginBottom: 0, fontWeight: 600 }}>
+              Masukkan lot penjatahan dan harga IPO, lalu lihat skenario ARA/ARB per langkah.
             </p>
           </div>
           <button
@@ -98,7 +95,7 @@ export default function IpoAraArbCalculator() {
           </button>
         </div>
         <small style={{ color: "var(--bibit-text-secondary)" }}>
-          Catatan: Penyederhanaan batas ±25% per langkah dan pembulatan ke rupiah terdekat (tanpa tick size).
+          Catatan: asumsi ±25% per langkah, tanpa tick size.
         </small>
       </div>
 

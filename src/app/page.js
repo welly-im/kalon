@@ -1,6 +1,6 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 
 import Persen from "./persen";
 import BerapaPersen from "./pageBerapaPersen";
@@ -18,6 +18,34 @@ const components = {
   BerapaPersen,
 };
 
+const toolMeta = {
+  Persen: {
+    title: "Kalkulator Persentase",
+    icon: "📊",
+    description: "Hitung X% dari sebuah nilai.",
+  },
+  PerubahanPersen: {
+    title: "Perubahan Persentase",
+    icon: "📈",
+    description: "Selisih persen dan nominal.",
+  },
+  HitungDividenDariJumlahLot: {
+    title: "Dividen dari Lot",
+    icon: "💰",
+    description: "Dividen, modal, dan yield.",
+  },
+  HitungLotDividen: {
+    title: "Lot dari Modal",
+    icon: "🎯",
+    description: "Lot bisa dibeli + dividen.",
+  },
+  BerapaPersen: {
+    title: "Berapa Persen?",
+    icon: "🧮",
+    description: "Persentase sebuah nilai ke total.",
+  },
+};
+
 const defaultOrder = [
   "Persen",
   "PerubahanPersen",
@@ -26,171 +54,202 @@ const defaultOrder = [
   "BerapaPersen",
 ];
 
+const views = [
+  { id: "home", label: "Semua alat", icon: "🧰" },
+  { id: "dca", label: "Kalkulator DCA", icon: "📊" },
+  { id: "ipo", label: "Kalkulator ARA/ARB", icon: "🧾" },
+];
+
 export default function Home() {
-  const [activePage, setActivePage] = useState("home");
-  const [showMenu, setShowMenu] = useState(false);
+  const [activeView, setActiveView] = useState("home");
+  const [showQuickPanel, setShowQuickPanel] = useState(false);
+
+  const stats = useMemo(
+    () => ({
+      totalTools: defaultOrder.length + 2, // + DCA & IPO tools
+      quickActions: 3,
+    }),
+    []
+  );
 
   return (
-    <div
-      className="container position-relative p-0"
-      style={{ 
-        maxWidth: "430px", 
-        margin: "0 auto",
-        backgroundColor: "var(--bibit-surface)",
-        minHeight: "100vh",
-        paddingBottom: "100px"
-      }}
-    >
-      {/* Header */}
-      <div 
-        className="card-bibit p-4 mb-3"
-        style={{ 
-          borderRadius: "0 0 24px 24px",
-          background: "linear-gradient(135deg, var(--bibit-primary) 0%, var(--bibit-primary-dark) 100%)",
-          border: "none",
-          color: "white"
-        }}
-      >
-        <div className="d-flex justify-content-between align-items-center mb-2">
-          <h5 className="m-0" style={{ fontWeight: "700" }}>Kalkulator Investasi</h5>
-          <button
-            className="btn"
-            style={{ 
-              background: "rgba(255, 255, 255, 0.2)",
-              border: "none",
-              color: "white",
-              borderRadius: "12px",
-              padding: "8px 12px"
-            }}
-            onClick={() => setShowMenu(!showMenu)}
-          >
-            ☰
-          </button>
-        </div>
-        <p className="m-0" style={{ opacity: "0.9", fontSize: "14px" }}>
-          Alat untuk perhitungan investasi saham Anda v.29102025
-        </p>
+    <div className="app-shell">
+      <div className="app-container">
+        <header className="hero-card">
+          <div className="hero-head">
+            <div>
+              <div className="badge-pill">Kalon v2</div>
+              <h1 className="hero-title">Kalkulator Investasi</h1>
+              <p className="hero-subtitle">
+                Alat hitung saham yang cepat, ringkas, dan enak dipakai di mana pun.
+              </p>
+              {/* <div className="hero-meta">
+                <span className="meta-chip">{stats.totalTools} alat siap pakai</span>
+                <span className="meta-chip">Nyaman di mobile & desktop</span>
+                <span className="meta-chip">Hasil instan tanpa reload</span>
+              </div> */}
+            </div>
+            <div className="hero-actions">
+              <button
+                type="button"
+                className="cta-primary"
+                onClick={() => setActiveView("home")}
+              >
+                🚀 Mulai hitung
+              </button>
+              <button
+                type="button"
+                className="cta-ghost"
+                onClick={() => setShowQuickPanel(true)}
+              >
+                ⚡ Panel cepat
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <nav className="view-switcher" aria-label="Pilih kategori alat">
+          {views.map((view) => (
+            <button
+              key={view.id}
+              type="button"
+              className={`view-chip ${activeView === view.id ? "is-active" : ""}`}
+              onClick={() => setActiveView(view.id)}
+            >
+              <span className="view-icon">{view.icon}</span>
+              <span>{view.label}</span>
+            </button>
+          ))}
+        </nav>
+
+        <main className="content-grid">
+          {activeView === "home" && (
+            <div className="tool-grid">
+              {defaultOrder.map((key) => {
+                const Component = components[key];
+                if (!Component) return null;
+
+                return (
+                  <section key={key} id={`tool-${key}`} className="tool-card">
+                    <div className="tool-card__head">
+                      <div className="tool-card__title">
+                        <span className="tool-icon">{toolMeta[key]?.icon || "✨"}</span>
+                        <div>
+                          <h3>{toolMeta[key]?.title || key}</h3>
+                          <p>{toolMeta[key]?.description}</p>
+                        </div>
+                      </div>
+                      <div className="pill">Kalkulator</div>
+                    </div>
+                    <div className="tool-card__body">
+                      <Component />
+                    </div>
+                  </section>
+                );
+              })}
+            </div>
+          )}
+
+          {activeView === "dca" && (
+            <section className="tool-card tool-card--wide">
+              <div className="tool-card__head">
+                <div className="tool-card__title">
+                  <span className="tool-icon">📊</span>
+                  <div>
+                    <h3>Kalkulator Dollar Cost Averaging</h3>
+                    <p>Lacak pembelian, rata-rata harga, dan total modal tanpa ribet.</p>
+                  </div>
+                </div>
+                <div className="pill pill--accent">DCA</div>
+              </div>
+              <div className="tool-card__body">
+                <DcaCalculator />
+              </div>
+            </section>
+          )}
+
+          {activeView === "ipo" && (
+            <section className="tool-card tool-card--wide">
+              <div className="tool-card__head">
+                <div className="tool-card__title">
+                  <span className="tool-icon">🧾</span>
+                  <div>
+                    <h3>Kalkulator ARA / ARB IPO</h3>
+                    <p>Simulasikan skenario ARA/ARB IPO dengan cepat.</p>
+                  </div>
+                </div>
+                <div className="pill pill--accent">IPO</div>
+              </div>
+              <div className="tool-card__body">
+                <IpoAraArbCalculator />
+              </div>
+            </section>
+          )}
+        </main>
       </div>
 
-      {/* Menu Dropdown */}
-      {showMenu && (
-        <div
-          className="position-absolute card-bibit p-3 popup-animated"
-          style={{ 
-            width: "340px", 
-            zIndex: 999, 
-            top: "70px", 
-            right: "16px",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12)",
-            borderRadius: "16px"
-          }}
-        >
-          <ul className="list-unstyled mb-0">
-            <li className="mb-2">
+      {showQuickPanel && (
+        <div className="quick-panel__backdrop" role="presentation">
+          <div className="quick-panel card-bibit">
+            <div className="quick-panel__head">
+              <div>
+                <p className="badge-pill">Navigasi cepat</p>
+                <h4>Pilih kalkulator</h4>
+                <small>Langsung buka alat yang dibutuhkan.</small>
+              </div>
               <button
-                className="btn w-100 text-start p-2"
-                style={{ 
-                  background: activePage === "home" ? "var(--bibit-secondary)" : "transparent",
-                  border: "none",
-                  borderRadius: "12px",
-                  color: "var(--bibit-text-primary)"
-                }}
-                onClick={() => {
-                  setActivePage("home");
-                  setShowMenu(false);
-                }}
+                type="button"
+                className="cta-ghost"
+                onClick={() => setShowQuickPanel(false)}
               >
-                🏠 <strong style={{ marginLeft: "8px" }}>Alat Kalkulator</strong>
+                ✕
               </button>
-            </li>
-            <li>
-              <button
-                className="btn w-100 text-start p-2"
-                style={{ 
-                  background: activePage === "dca" ? "var(--bibit-secondary)" : "transparent",
-                  border: "none",
-                  borderRadius: "12px",
-                  color: "var(--bibit-text-primary)"
-                }}
-                onClick={() => {
-                  setActivePage("dca");
-                  setShowMenu(false);
-                }}
-              >
-                📊 <strong style={{ marginLeft: "8px" }}>Kalkulator DCA</strong>
-              </button>
-            </li>
-                <li className="mt-2">
-                  <button
-                    className="btn w-100 text-start p-2"
-                    style={{ 
-                      background: activePage === "ipo" ? "var(--bibit-secondary)" : "transparent",
-                      border: "none",
-                      borderRadius: "12px",
-                      color: "var(--bibit-text-primary)"
-                    }}
-                    onClick={() => {
-                      setActivePage("ipo");
-                      setShowMenu(false);
-                    }}
-                  >
-                    🧾 <strong style={{ marginLeft: "8px" }}>Kalkulator ARA/ARB</strong>
-                  </button>
-                </li>
-          </ul>
+            </div>
+
+            <div className="quick-panel__grid">
+              {views.map((view) => (
+                <button
+                  key={view.id}
+                  type="button"
+                  className="quick-link"
+                  onClick={() => {
+                    setActiveView(view.id);
+                    setShowQuickPanel(false); 
+                  }}
+                >
+                  <span className="quick-link__icon">{view.icon}</span>
+                  <div>
+                    <strong>{view.label}</strong> <br />
+                    <small>Buka tampilan {view.label.toLowerCase()}</small>
+                  </div>
+                </button>
+              ))}
+
+              {defaultOrder.map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  className="quick-link"
+                  onClick={() => {
+                    setActiveView("home");
+                    setShowQuickPanel(false);
+                    const el = document?.querySelector(`#tool-${key}`);
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
+                >
+                  <span className="quick-link__icon">{toolMeta[key]?.icon || "✨"}</span>
+                  <div>
+                    <strong>{toolMeta[key]?.title || key}</strong> <br />
+                    <small>{toolMeta[key]?.description}</small>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
-
-      {/* Main Content */}
-      <div className="px-3">{/* Content container */}
-
-        {/* Calculator Tools Section */}
-        <div
-          style={{
-            display: activePage === "home" ? "block" : "none",
-            width: "100%",
-          }}
-        >
-          {defaultOrder.map((key, index) => {
-            const Component = components[key];
-            if (!Component) return null;
-
-            return (
-              <div
-                key={key}
-                className="card-bibit mb-3 p-4"
-                style={{ border: "1px solid var(--bibit-border)" }}
-              >
-                <Component />
-              </div>
-            );
-          })}
-        </div>
-
-        {/* DCA Calculator Section */}
-        <div
-          className="w-100"
-          style={{
-            display: activePage === "dca" ? "block" : "none",
-          }}
-        >
-          <div className="card-bibit p-4">
-            <DcaCalculator />
-          </div>
-        </div>
-
-        {/* IPO ARA/ARB Calculator Section */}
-        <div
-          className="w-100"
-          style={{
-            display: activePage === "ipo" ? "block" : "none",
-          }}
-        >
-          <div className="card-bibit p-4">
-            <IpoAraArbCalculator />
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

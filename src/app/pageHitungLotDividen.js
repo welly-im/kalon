@@ -74,12 +74,6 @@ export default function HitungLotDividen() {
   return (
     <div className="w-100">
       <div className="mb-3">
-        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
-          🎯 Kalkulator Lot dari Modal
-        </h6>
-        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
-          Hitung berapa lot yang bisa dibeli dan estimasi dividen dari modal investasi
-        </p>
         <div 
           className="p-3" 
           style={{ 
@@ -90,7 +84,7 @@ export default function HitungLotDividen() {
           }}
         >
           <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
-            💡 <strong>Tips:</strong> Diversifikasi portofolio dengan membagi modal ke beberapa saham. Jangan taruh semua telur dalam satu keranjang.
+            💡 Tips: bagi modal ke beberapa saham untuk diversifikasi.
           </small>
         </div>
       </div>
@@ -110,7 +104,7 @@ export default function HitungLotDividen() {
               style={{ fontSize: "16px" }}
             />
             <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
-              Jumlah uang yang akan diinvestasikan (Rupiah)
+              Dana investasi (Rupiah)
             </small>
           </div>
           
@@ -128,7 +122,7 @@ export default function HitungLotDividen() {
                 style={{ fontSize: "16px" }}
               />
               <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
-                Harga saham saat ini
+                Harga saham
               </small>
             </div>
             <div className="col-12 col-sm-6">
@@ -144,7 +138,7 @@ export default function HitungLotDividen() {
                 style={{ fontSize: "16px" }}
               />
               <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
-                Estimasi dividen tahunan
+                Estimasi dividen/lembar
               </small>
             </div>
           </div>

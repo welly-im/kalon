@@ -75,11 +75,8 @@ export default function DcaCalculator() {
   return (
     <div className="w-100">
       <div className="mb-4">
-        <h5 className="mb-3" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
-          💹 Kalkulator Dollar Cost Averaging (DCA)
-        </h5>
-        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "14px", marginBottom: "16px" }}>
-          Lacak pembelian investasi Anda dan hitung harga rata-rata
+        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "14px", marginBottom: "16px", fontWeight: "600" }}>
+          Catat pembelian dan hitung rata-rata harga
         </p>
         <div 
           className="p-3" 
@@ -91,7 +88,7 @@ export default function DcaCalculator() {
           }}
         >
           <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
-            💡 <strong>Tips:</strong> DCA membantu mengurangi risiko volatilitas dengan membeli saham secara rutin dalam jumlah tetap, sehingga Anda membeli lebih banyak saat harga turun dan lebih sedikit saat harga naik.
+            💡 Tips: beli rutin dengan jumlah tetap untuk meratakan harga saat naik turun.
           </small>
         </div>
       </div>

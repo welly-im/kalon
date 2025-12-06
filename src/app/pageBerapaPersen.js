@@ -38,12 +38,6 @@ export default function BerapaPersen() {
   return (
     <div className="w-100">
       <div className="mb-3">
-        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
-          🧮 Berapa Persen
-        </h6>
-        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
-          Cari tahu berapa persen satu angka dari angka lainnya
-        </p>
         <div 
           className="p-3" 
           style={{ 
@@ -54,7 +48,7 @@ export default function BerapaPersen() {
           }}
         >
           <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
-            💡 <strong>Contoh:</strong> 500.000 adalah berapa % dari 2.000.000? = 25%. Berguna untuk menghitung alokasi portfolio.
+            💡 Contoh: 500.000 dari 2.000.000 = 25%.
           </small>
         </div>
       </div>
@@ -63,13 +57,13 @@ export default function BerapaPersen() {
         <div className="mb-4">
           <div className="mb-3">
             <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-primary)", fontWeight: "600", marginBottom: "8px" }}>
-              🤔 Berapa persen adalah...
+              🤔 Berapa persen...
             </label>
           </div>
           <div className="row g-3 mb-3">
             <div className="col-12">
               <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
-                💰 Jumlah yang ingin dihitung
+                💰 Nilai yang dicek
               </label>
               <input
                 type="text"
@@ -85,7 +79,7 @@ export default function BerapaPersen() {
             </div>
             <div className="col-12">
               <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600" }}>
-                📊 Dari total keseluruhan
+                📊 Dari total
               </label>
               <input
                 type="text"

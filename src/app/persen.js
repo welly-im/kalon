@@ -61,12 +61,6 @@ export default function Persen() {
   return (
     <div className="w-100">
       <div className="mb-3">
-        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
-          📊 Kalkulator Persentase
-        </h6>
-        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
-          Hitung berapa persen dari suatu angka
-        </p>
         <div 
           className="p-3" 
           style={{ 
@@ -77,7 +71,7 @@ export default function Persen() {
           }}
         >
           <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
-            💡 <strong>Contoh:</strong> 10% dari 1.000.000 = 100.000. Berguna untuk menghitung keuntungan, dividen, atau komisi.
+            💡 10% dari 1.000.000 = 100.000.
           </small>
         </div>
       </div>
@@ -103,7 +97,7 @@ export default function Persen() {
           
           <div className="mb-3">
             <label className="form-label" style={{ fontSize: "12px", color: "var(--bibit-text-secondary)", fontWeight: "600", marginBottom: "8px" }}>
-              💰 Dari Jumlah Total
+              💰 Dari jumlah
             </label>
             <input
               type="text"
@@ -133,7 +127,7 @@ export default function Persen() {
               {invest && (
                 <>
                   <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", margin: "12px 0 4px" }}>
-                    Nilai Invest (Modal + Hasil)
+                    Total (nilai + hasil)
                   </div>
                   <div style={{ color: "var(--bibit-primary)", fontSize: "20px", fontWeight: "700" }}>
                     Rp {invest}

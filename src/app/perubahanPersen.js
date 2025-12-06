@@ -62,12 +62,6 @@ export default function PerubahanPersen() {
   return (
     <div className="w-100">
       <div className="mb-3">
-        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
-          📈 Perubahan Persentase
-        </h6>
-        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
-          Hitung perubahan persentase antara dua nilai
-        </p>
         <div 
           className="p-3" 
           style={{ 
@@ -78,7 +72,7 @@ export default function PerubahanPersen() {
           }}
         >
           <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
-            💡 <strong>Contoh:</strong> Harga saham naik dari Rp 4.000 ke Rp 4.400 = +10%. Berguna untuk analisis performa investasi.
+            💡 Contoh: 4.000 → 4.400 = +10%.
           </small>
         </div>
       </div>
@@ -130,7 +124,7 @@ export default function PerubahanPersen() {
               }}
             >
               <div style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
-                Perubahan Persentase
+                Perubahan
               </div>
               <div style={{ 
                 color: hasil.includes('-') ? "var(--bibit-error)" : "var(--bibit-success)", 

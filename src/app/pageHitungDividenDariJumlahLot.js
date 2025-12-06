@@ -74,12 +74,6 @@ export default function HitungDividenDariJumlahLot() {
   return (
     <div className="w-100">
       <div className="mb-3">
-        <h6 className="mb-2" style={{ color: "var(--bibit-text-primary)", fontWeight: "700" }}>
-          💰 Kalkulator Dividen
-        </h6>
-        <p style={{ color: "var(--bibit-text-secondary)", fontSize: "12px", marginBottom: "16px" }}>
-          Hitung pendapatan dividen dari jumlah lot saham Anda
-        </p>
         <div 
           className="p-3" 
           style={{ 
@@ -90,7 +84,7 @@ export default function HitungDividenDariJumlahLot() {
           }}
         >
           <small style={{ color: "var(--bibit-text-secondary)", fontSize: "12px" }}>
-            💡 <strong>Tips:</strong> Dividen yield = (Dividen per lembar ÷ Harga per lembar) × 100%. Yield 4-6% biasanya dianggap baik untuk saham dividen.
+            💡 Yield = (Dividen ÷ Harga) × 100%. Kisaran 4-6% umum untuk saham dividen.
           </small>
         </div>
       </div>
@@ -127,7 +121,7 @@ export default function HitungDividenDariJumlahLot() {
                 style={{ fontSize: "16px" }}
               />
               <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
-                Dalam Rupiah (contoh: 150)
+                Dalam Rupiah (misal 150)
               </small>
             </div>
           </div>
@@ -163,7 +157,7 @@ export default function HitungDividenDariJumlahLot() {
               style={{ fontSize: "16px" }}
             />
             <small style={{ color: "var(--bibit-text-secondary)", fontSize: "10px" }}>
-              Untuk menghitung dividend yield dan total investasi
+              Untuk yield dan total investasi
             </small>
           </div>
 

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useMemo, useState } from "react";
 
 import Persen from "./persen";
+import InvestmentProjectionCalculator from "./investmentProjectionCalculator";
 import BerapaPersen from "./pageBerapaPersen";
 import PerubahanPersen from "./perubahanPersen";
 import HitungDividenDariJumlahLot from "./pageHitungDividenDariJumlahLot";
@@ -56,6 +57,7 @@ const defaultOrder = [
 
 const views = [
   { id: "home", label: "Semua alat", icon: "🧰" },
+  { id: "projection", label: "Proyeksi Investasi", icon: "📈" },
   { id: "dca", label: "Kalkulator DCA", icon: "📊" },
   { id: "ipo", label: "Kalkulator ARA/ARB", icon: "🧾" },
 ];
@@ -128,7 +130,6 @@ export default function Home() {
               {defaultOrder.map((key) => {
                 const Component = components[key];
                 if (!Component) return null;
-
                 return (
                   <section key={key} id={`tool-${key}`} className="tool-card">
                     <div className="tool-card__head">
@@ -185,6 +186,24 @@ export default function Home() {
               </div>
             </section>
           )}
+
+          {activeView === "projection" && (
+            <section className="tool-card tool-card--wide">
+              <div className="tool-card__head">
+                <div className="tool-card__title">
+                  <span className="tool-icon">📈</span>
+                  <div>
+                    <h3>Proyeksi Investasi Tahunan</h3>
+                    <p>Hitung proyeksi investasi berdasarkan target bunga, reinvest, dan tahun.</p>
+                  </div>
+                </div>
+                <div className="pill pill--accent">Proyeksi</div>
+              </div>
+              <div className="tool-card__body">
+                <InvestmentProjectionCalculator />
+              </div>
+            </section>
+          )}
         </main>
       </div>
 
@@ -214,7 +233,7 @@ export default function Home() {
                   className="quick-link"
                   onClick={() => {
                     setActiveView(view.id);
-                    setShowQuickPanel(false); 
+                    setShowQuickPanel(false);
                   }}
                 >
                   <span className="quick-link__icon">{view.icon}</span>

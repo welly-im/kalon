@@ -1,7 +1,6 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useMemo, useState } from "react";
-import { useMemo, useState } from "react";
 
 import Persen from "./persen";
 import InvestmentProjectionCalculator from "./investmentProjectionCalculator";
@@ -18,34 +17,6 @@ const components = {
   HitungDividenDariJumlahLot,
   HitungLotDividen,
   BerapaPersen,
-};
-
-const toolMeta = {
-  Persen: {
-    title: "Kalkulator Persentase",
-    icon: "📊",
-    description: "Hitung X% dari sebuah nilai.",
-  },
-  PerubahanPersen: {
-    title: "Perubahan Persentase",
-    icon: "📈",
-    description: "Selisih persen dan nominal.",
-  },
-  HitungDividenDariJumlahLot: {
-    title: "Dividen dari Lot",
-    icon: "💰",
-    description: "Dividen, modal, dan yield.",
-  },
-  HitungLotDividen: {
-    title: "Lot dari Modal",
-    icon: "🎯",
-    description: "Lot bisa dibeli + dividen.",
-  },
-  BerapaPersen: {
-    title: "Berapa Persen?",
-    icon: "🧮",
-    description: "Persentase sebuah nilai ke total.",
-  },
 };
 
 const toolMeta = {
@@ -102,16 +73,6 @@ export default function Home() {
     }),
     []
   );
-  const [activeView, setActiveView] = useState("home");
-  const [showQuickPanel, setShowQuickPanel] = useState(false);
-
-  const stats = useMemo(
-    () => ({
-      totalTools: defaultOrder.length + 2, // + DCA & IPO tools
-      quickActions: 3,
-    }),
-    []
-  );
 
   return (
     <div className="app-shell">
@@ -131,43 +92,18 @@ export default function Home() {
               </div> */}
             </div>
             <div className="hero-actions">
-    <div className="app-shell">
-      <div className="app-container">
-        <header className="hero-card">
-          <div className="hero-head">
-            <div>
-              <div className="badge-pill">Kalon v2</div>
-              <h1 className="hero-title">Kalkulator Investasi</h1>
-              <p className="hero-subtitle">
-                Alat hitung saham yang cepat, ringkas, dan enak dipakai di mana pun.
-              </p>
-              {/* <div className="hero-meta">
-                <span className="meta-chip">{stats.totalTools} alat siap pakai</span>
-                <span className="meta-chip">Nyaman di mobile & desktop</span>
-                <span className="meta-chip">Hasil instan tanpa reload</span>
-              </div> */}
-            </div>
-            <div className="hero-actions">
               <button
                 type="button"
                 className="cta-primary"
                 onClick={() => setActiveView("home")}
-                type="button"
-                className="cta-primary"
-                onClick={() => setActiveView("home")}
               >
-                🚀 Mulai hitung
                 🚀 Mulai hitung
               </button>
               <button
                 type="button"
                 className="cta-ghost"
                 onClick={() => setShowQuickPanel(true)}
-                type="button"
-                className="cta-ghost"
-                onClick={() => setShowQuickPanel(true)}
               >
-                ⚡ Panel cepat
                 ⚡ Panel cepat
               </button>
             </div>
@@ -332,7 +268,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-      )}
       )}
     </div>
   );

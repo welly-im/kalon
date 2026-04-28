@@ -7,6 +7,22 @@ export default function BerapaPersen() {
   const [angka2, setAngka2] = useState("");
   const [hasil, setHasil] = useState("");
 
+  // Ambil data dari localStorage saat pertama kali
+  useEffect(() => {
+    const savedAngka1 = localStorage.getItem("berapapersen_angka1");
+    const savedAngka2 = localStorage.getItem("berapapersen_angka2");
+    if (savedAngka1) setAngka1(savedAngka1);
+    if (savedAngka2) setAngka2(savedAngka2);
+  }, []);
+
+  // Simpan setiap perubahan ke localStorage
+  useEffect(() => {
+    localStorage.setItem("berapapersen_angka1", angka1);
+  }, [angka1]);
+  useEffect(() => {
+    localStorage.setItem("berapapersen_angka2", angka2);
+  }, [angka2]);
+
   const formatNumber = (value) => {
     return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -33,6 +49,8 @@ export default function BerapaPersen() {
     setAngka1("");
     setAngka2("");
     setHasil("");
+    localStorage.removeItem("berapapersen_angka1");
+    localStorage.removeItem("berapapersen_angka2");
   };
 
   return (

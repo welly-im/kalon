@@ -1,15 +1,45 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function InvestmentProjectionCalculator() {
   const currentYear = new Date().getFullYear();
 
-  const [modalAwal, setModalAwal] = useState("");
   const [rateTahunan, setRateTahunan] = useState("");
   const [tambahanTahunan, setTambahanTahunan] = useState("");
   const [startYear, setStartYear] = useState(String(currentYear));
   const [endYear, setEndYear] = useState(String(currentYear + 4));
 
+  const [modalAwal, setModalAwal] = useState("");
+  // Ambil data dari localStorage saat pertama kali
+  useEffect(() => {
+    const savedModal = localStorage.getItem("proj_modalAwal");
+    const savedRate = localStorage.getItem("proj_rateTahunan");
+    const savedTambahan = localStorage.getItem("proj_tambahanTahunan");
+    const savedStart = localStorage.getItem("proj_startYear");
+    const savedEnd = localStorage.getItem("proj_endYear");
+    if (savedModal) setModalAwal(savedModal);
+    if (savedRate) setRateTahunan(savedRate);
+    if (savedTambahan) setTambahanTahunan(savedTambahan);
+    if (savedStart) setStartYear(savedStart);
+    if (savedEnd) setEndYear(savedEnd);
+  }, []);
+
+  // Simpan setiap perubahan ke localStorage
+  useEffect(() => {
+    localStorage.setItem("proj_modalAwal", modalAwal);
+  }, [modalAwal]);
+  useEffect(() => {
+    localStorage.setItem("proj_rateTahunan", rateTahunan);
+  }, [rateTahunan]);
+  useEffect(() => {
+    localStorage.setItem("proj_tambahanTahunan", tambahanTahunan);
+  }, [tambahanTahunan]);
+  useEffect(() => {
+    localStorage.setItem("proj_startYear", startYear);
+  }, [startYear]);
+  useEffect(() => {
+    localStorage.setItem("proj_endYear", endYear);
+  }, [endYear]);
   const parseNumber = (val) => {
     if (!val) return 0;
     return Number(val.replace(/,/g, "")) || 0;
@@ -58,6 +88,15 @@ export default function InvestmentProjectionCalculator() {
 
   const handleReset = () => {
     setModalAwal("");
+    setRateTahunan("");
+    setTambahanTahunan("");
+    setStartYear(String(currentYear));
+    setEndYear(String(currentYear + 4));
+    localStorage.removeItem("proj_modalAwal");
+    localStorage.removeItem("proj_rateTahunan");
+    localStorage.removeItem("proj_tambahanTahunan");
+    localStorage.removeItem("proj_startYear");
+    localStorage.removeItem("proj_endYear");
     setRateTahunan("");
     setTambahanTahunan("");
     setStartYear(String(currentYear));

@@ -3,13 +3,33 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 
 export default function PerubahanPersen() {
-  const [angka1, setAngka1] = useState("");
   const [angka2, setAngka2] = useState("");
   const [modal, setModal] = useState("");
   const [hasil, setHasil] = useState("");
   const [hasil2, setHasil2] = useState("");
   const [hasil3, setHasil3] = useState("");
 
+  const [angka1, setAngka1] = useState("");
+  // Ambil data dari localStorage saat pertama kali
+  useEffect(() => {
+    const savedAngka1 = localStorage.getItem("perubahan_angka1");
+    const savedAngka2 = localStorage.getItem("perubahan_angka2");
+    const savedModal = localStorage.getItem("perubahan_modal");
+    if (savedAngka1) setAngka1(savedAngka1);
+    if (savedAngka2) setAngka2(savedAngka2);
+    if (savedModal) setModal(savedModal);
+  }, []);
+
+  // Simpan setiap perubahan ke localStorage
+  useEffect(() => {
+    localStorage.setItem("perubahan_angka1", angka1);
+  }, [angka1]);
+  useEffect(() => {
+    localStorage.setItem("perubahan_angka2", angka2);
+  }, [angka2]);
+  useEffect(() => {
+    localStorage.setItem("perubahan_modal", modal);
+  }, [modal]);
   const formatNumber = (value) => {
     return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -25,13 +45,18 @@ export default function PerubahanPersen() {
   const handleModalChange = (e) => {
     setModal(formatNumber(e.target.value));
   };
-
   useEffect(() => {
     const num1 = parseFloat(angka1.replace(/,/g, ""));
     const num2 = parseFloat(angka2.replace(/,/g, ""));
     if (!isNaN(num1) && !isNaN(num2) && num1 !== 0) {
-      const persen = ((num2 - num1) / num1) * 100;
-      setHasil(persen.toLocaleString("en-US") + "%");
+    const persen = ((num2 - num1) / num1) * 100;
+
+    const formatted = persen.toLocaleString("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1,
+    });
+
+  setHasil(formatted + "%");
     } else {
       setHasil("");
     }
@@ -57,6 +82,9 @@ export default function PerubahanPersen() {
     setHasil("");
     setHasil2("");
     setHasil3("");
+    localStorage.removeItem("perubahan_angka1");
+    localStorage.removeItem("perubahan_angka2");
+    localStorage.removeItem("perubahan_modal");
   };
 
   return (

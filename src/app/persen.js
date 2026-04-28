@@ -3,11 +3,30 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 
 export default function Persen() {
-  const [angka1, setAngka1] = useState("");
+   const [angka1, setAngka1] = useState("");
   const [angka2, setAngka2] = useState("");
   const [hasil, setHasil] = useState("");
   const [invest, setInvest] = useState("");
 
+  // Ambil dari localStorage
+  useEffect(() => {
+    const savedAngka1 = localStorage.getItem("persen_angka1");
+    const savedAngka2 = localStorage.getItem("persen_angka2");
+
+    if (savedAngka1) setAngka1(savedAngka1);
+    if (savedAngka2) setAngka2(savedAngka2);
+  }, []);
+
+  // Simpan ke localStorage
+  useEffect(() => {
+    localStorage.setItem("persen_angka1", angka1);
+  }, [angka1]);
+
+  useEffect(() => {
+    localStorage.setItem("persen_angka2", angka2);
+  }, [angka2]);
+
+  // Format angka (Indonesia)
   const formatNumber = (value) => {
     let clean = value.replace(/[^\d,]/g, "").replace(",", ".");
     const [integer, decimal] = clean.split(".");
@@ -23,28 +42,34 @@ export default function Persen() {
     setAngka2(formatNumber(e.target.value));
   };
 
+  // Hitung persen
   useEffect(() => {
     const parseToFloat = (str) => {
       if (!str) return NaN;
       const clean = str.replace(/\./g, "").replace(",", ".");
-      const parsed = Number(clean);
-      return isNaN(parsed) ? NaN : parsed;
+      return Number(clean);
     };
+
     const num1 = parseToFloat(angka1);
     const num2 = parseToFloat(angka2);
+
     if (!isNaN(num1) && !isNaN(num2)) {
       const result = (num1 / 100) * num2;
+
       const formatted = result.toLocaleString("id-ID", {
         minimumFractionDigits: 0,
         maximumFractionDigits: 2,
       });
-      const investValue = result + num2;
-      const investFormatted = investValue.toLocaleString("id-ID", {
+
+      const total = result + num2;
+
+      const totalFormatted = total.toLocaleString("id-ID", {
         minimumFractionDigits: 0,
         maximumFractionDigits: 2,
       });
+
       setHasil(formatted);
-      setInvest(investFormatted);
+      setInvest(totalFormatted);
     } else {
       setHasil("");
       setInvest("");
@@ -56,6 +81,9 @@ export default function Persen() {
     setAngka2("");
     setHasil("");
     setInvest("");
+
+    localStorage.removeItem("persen_angka1");
+    localStorage.removeItem("persen_angka2");
   };
 
   return (

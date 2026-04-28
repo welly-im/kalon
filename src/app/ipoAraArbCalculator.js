@@ -2,9 +2,30 @@ import { useState, useMemo } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function IpoAraArbCalculator() {
-  const [lot, setLot] = useState("");
   const [harga, setHarga] = useState("");
   const [stepsCount, setStepsCount] = useState("5");
+  const [lot, setLot] = useState("");
+
+  // Ambil data dari localStorage saat pertama kali
+  useEffect(() => {
+    const savedLot = localStorage.getItem("ipo_lot");
+    const savedHarga = localStorage.getItem("ipo_harga");
+    const savedSteps = localStorage.getItem("ipo_stepsCount");
+    if (savedLot) setLot(savedLot);
+    if (savedHarga) setHarga(savedHarga);
+    if (savedSteps) setStepsCount(savedSteps);
+  }, []);
+
+  // Simpan setiap perubahan ke localStorage
+  useEffect(() => {
+    localStorage.setItem("ipo_lot", lot);
+  }, [lot]);
+  useEffect(() => {
+    localStorage.setItem("ipo_harga", harga);
+  }, [harga]);
+  useEffect(() => {
+    localStorage.setItem("ipo_stepsCount", stepsCount);
+  }, [stepsCount]);
 
   const parseNumber = (str) => {
     if (typeof str !== "string") return Number(str) || 0;
@@ -13,6 +34,14 @@ export default function IpoAraArbCalculator() {
     return isNaN(n) ? 0 : n;
   };
 
+  const handleReset = () => {
+    setLot("");
+    setHarga("");
+    setStepsCount("5");
+    localStorage.removeItem("ipo_lot");
+    localStorage.removeItem("ipo_harga");
+    localStorage.removeItem("ipo_stepsCount");
+  };
   const formatNumber = (num) => new Intl.NumberFormat("id-ID").format(num || 0);
 
   const lotNumber = parseNumber(lot);
@@ -71,11 +100,7 @@ export default function IpoAraArbCalculator() {
     return pairs;
   }, [stepsAra, stepsArb, normalizedSteps]);
 
-  const handleReset = () => {
-    setLot("");
-    setHarga("");
-    setStepsCount("5");
-  };
+  // ...existing code...
 
   return (
     <div className="w-100">

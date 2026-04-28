@@ -4,72 +4,102 @@ import { useState, useEffect } from "react";
 
 export default function HitungDividenDariJumlahLot() {
   const [jumlahLot, setJumlahLot] = useState("");
-  const [dividenPerLembar, setDividenPerLembar] = useState("");
-  const [hargaPerLembar, setHargaPerLembar] = useState("");
-  const [hasil, setHasil] = useState("");
-  const [modal, setModal] = useState("");
-  const [dividenYield, setDividenYield] = useState("");
+const [dividenPerLembar, setDividenPerLembar] = useState("");
+const [hargaPerLembar, setHargaPerLembar] = useState("");
 
-  const formatNumber = (value) => {
-    return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
+const [hasil, setHasil] = useState("");
+const [modal, setModal] = useState("");
+const [dividenYield, setDividenYield] = useState("");
 
-  const handleJumlahLotChange = (e) => {
-    setJumlahLot(formatNumber(e.target.value));
-  };
+// Load localStorage
+useEffect(() => {
+ const savedJumlahLot = localStorage.getItem("dividen_jumlahLot");
+ const savedDividen = localStorage.getItem("dividen_dividenPerLembar");
+ const savedHarga = localStorage.getItem("dividen_hargaPerLembar");
 
-  const handleDividenPerLembarChange = (e) => {
-    setDividenPerLembar(formatNumber(e.target.value));
-  };
+ if (savedJumlahLot) setJumlahLot(savedJumlahLot);
+ if (savedDividen) setDividenPerLembar(savedDividen);
+ if (savedHarga) setHargaPerLembar(savedHarga);
+}, []);
 
-  const handleHargaPerLembarChange = (e) => {
-    setHargaPerLembar(formatNumber(e.target.value));
-  };
+// Save localStorage
+useEffect(() => {
+ localStorage.setItem("dividen_jumlahLot", jumlahLot);
+}, [jumlahLot]);
 
-  useEffect(() => {
-    const lot = parseFloat(jumlahLot.replace(/,/g, ""));
-    const dividen = parseFloat(dividenPerLembar.replace(/,/g, ""));
-    const harga = parseFloat(hargaPerLembar.replace(/,/g, ""));
+useEffect(() => {
+ localStorage.setItem("dividen_dividenPerLembar", dividenPerLembar);
+}, [dividenPerLembar]);
 
-    if (!isNaN(lot) && !isNaN(dividen)) {
-      const totalDividen = lot * 100 * dividen;
-      setHasil(totalDividen.toLocaleString("en-US"));
+useEffect(() => {
+ localStorage.setItem("dividen_hargaPerLembar", hargaPerLembar);
+}, [hargaPerLembar]);
 
-      if (!isNaN(harga)) {
-        const totalModal = lot * 100 * harga;
-        setModal(totalModal.toLocaleString("en-US"));
+// Format angka
+const formatNumber = (value) => {
+ return value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
-        if (totalModal > 0) {
-          const yieldRaw = (totalDividen / totalModal) * 100;
-          const yieldFormatted = Number.isInteger(yieldRaw)
-            ? yieldRaw.toLocaleString("id-ID")
-            : yieldRaw.toLocaleString("id-ID", {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2,
-              });
-          setDividenYield(yieldFormatted + "%");
-        } else {
-          setDividenYield("");
-        }
-      } else {
-        setModal("");
-        setDividenYield("");
-      }
-    } else {
-      setHasil("");
-      setModal("");
-      setDividenYield("");
-    }
-  }, [jumlahLot, dividenPerLembar, hargaPerLembar]);
+const handleJumlahLotChange = (e) => {
+ setJumlahLot(formatNumber(e.target.value));
+};
 
-  const resetForm = () => {
-    setJumlahLot("");
-    setDividenPerLembar("");
-    setHargaPerLembar("");
-    setHasil("");
-    setModal("");
-    setDividenYield("");
-  };
+const handleDividenPerLembarChange = (e) => {
+ setDividenPerLembar(formatNumber(e.target.value));
+};
+
+const handleHargaPerLembarChange = (e) => {
+ setHargaPerLembar(formatNumber(e.target.value));
+};
+
+// Perhitungan
+useEffect(() => {
+ const lot = parseFloat(jumlahLot.replace(/,/g, ""));
+ const dividen = parseFloat(dividenPerLembar.replace(/,/g, ""));
+ const harga = parseFloat(hargaPerLembar.replace(/,/g, ""));
+
+ if (!isNaN(lot) && !isNaN(dividen)) {
+   const totalDiv = lot * 100 * dividen;
+   setHasil(totalDiv.toLocaleString("en-US"));
+
+   if (!isNaN(harga)) {
+     const totalModal = lot * 100 * harga;
+     setModal(totalModal.toLocaleString("en-US"));
+
+     if (totalModal > 0) {
+       const yieldVal = (totalDiv / totalModal) * 100;
+
+       const yieldFormatted = yieldVal.toLocaleString("id-ID", {
+         maximumFractionDigits: 2,
+       });
+
+       setDividenYield(yieldFormatted + "%");
+     } else {
+       setDividenYield("");
+     }
+   } else {
+     setModal("");
+     setDividenYield("");
+   }
+ } else {
+   setHasil("");
+   setModal("");
+   setDividenYield("");
+ }
+}, [jumlahLot, dividenPerLembar, hargaPerLembar]);
+
+const resetForm = () => {
+ setJumlahLot("");
+ setDividenPerLembar("");
+ setHargaPerLembar("");
+ setHasil("");
+ setModal("");
+ setDividenYield("");
+
+ localStorage.removeItem("dividen_jumlahLot");
+ localStorage.removeItem("dividen_dividenPerLembar");
+ localStorage.removeItem("dividen_hargaPerLembar");
+};
 
   return (
     <div className="w-100">

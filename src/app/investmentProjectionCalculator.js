@@ -8,6 +8,7 @@ export default function InvestmentProjectionCalculator() {
   const [tambahanTahunan, setTambahanTahunan] = useState("");
   const [startYear, setStartYear] = useState(String(currentYear));
   const [endYear, setEndYear] = useState(String(currentYear + 4));
+  const [birthDate, setBirthDate] = useState("");
 
   const [modalAwal, setModalAwal] = useState("");
   // Ambil data dari localStorage saat pertama kali
@@ -17,11 +18,14 @@ export default function InvestmentProjectionCalculator() {
     const savedTambahan = localStorage.getItem("proj_tambahanTahunan");
     const savedStart = localStorage.getItem("proj_startYear");
     const savedEnd = localStorage.getItem("proj_endYear");
+    const savedBirthDate = localStorage.getItem("proj_birthDate");
+
     if (savedModal) setModalAwal(savedModal);
     if (savedRate) setRateTahunan(savedRate);
     if (savedTambahan) setTambahanTahunan(savedTambahan);
     if (savedStart) setStartYear(savedStart);
     if (savedEnd) setEndYear(savedEnd);
+    if (savedBirthDate) setBirthDate(savedBirthDate);
   }, []);
 
   // Simpan setiap perubahan ke localStorage
@@ -40,6 +44,10 @@ export default function InvestmentProjectionCalculator() {
   useEffect(() => {
     localStorage.setItem("proj_endYear", endYear);
   }, [endYear]);
+  useEffect(() => {
+    localStorage.setItem("proj_birthDate", birthDate);
+  }, [birthDate]);
+
   const parseNumber = (val) => {
     if (!val) return 0;
     return Number(val.replace(/,/g, "")) || 0;
@@ -61,6 +69,32 @@ export default function InvestmentProjectionCalculator() {
   const end = parseInt(endYear) || currentYear;
   const totalYears = end >= start ? end - start + 1 : 0;
 
+  const calculateAge = (year, dob) => {
+    if (!dob) return null;
+    const birth = new Date(dob);
+    let age = year - birth.getFullYear();
+    // Adjust age if birthday hasn't occurred yet this year
+    const today = new Date();
+    if (year === today.getFullYear()) {
+      if (birth.getMonth() > today.getMonth() || (birth.getMonth() === today.getMonth() && birth.getDate() > today.getDate())) {
+        age--;
+      }
+    } else if (year > birth.getFullYear()) {
+        // For future years, we only care about the birth month/day relative to a fixed point (e.g., Jan 1st of that year)
+        // This simplifies the logic to just year difference for future projections
+        if (birth.getMonth() > 0 || birth.getDate() > 1) {
+             // If birth date is not Jan 1, then age is year - birthYear, adjusted if month/day is later than Jan 1
+        }
+    }
+    return age > 0 ? age : 0; // Ensure age is not negative
+  };
+
+  const ageAtStart = useMemo(
+    () => calculateAge(start, birthDate),
+    [start, birthDate]
+  );
+  const ageAtEnd = useMemo(() => calculateAge(end, birthDate), [end, birthDate]);
+
   const results = useMemo(() => {
     if (!modalNumber || !rateNumber || totalYears <= 0) return [];
 
@@ -74,6 +108,7 @@ export default function InvestmentProjectionCalculator() {
 
       data.push({
         year: yearLabel,
+        age: calculateAge(yearLabel, birthDate),
         modalAwal: current,
         bunga,
         tambahan: tambahanNumber,
@@ -84,7 +119,7 @@ export default function InvestmentProjectionCalculator() {
     }
 
     return data;
-  }, [modalNumber, rateNumber, tambahanNumber, start, totalYears]);
+  }, [modalNumber, rateNumber, tambahanNumber, start, totalYears, birthDate]);
 
   const handleReset = () => {
     setModalAwal("");
@@ -92,15 +127,13 @@ export default function InvestmentProjectionCalculator() {
     setTambahanTahunan("");
     setStartYear(String(currentYear));
     setEndYear(String(currentYear + 4));
+    setBirthDate("");
     localStorage.removeItem("proj_modalAwal");
     localStorage.removeItem("proj_rateTahunan");
     localStorage.removeItem("proj_tambahanTahunan");
     localStorage.removeItem("proj_startYear");
     localStorage.removeItem("proj_endYear");
-    setRateTahunan("");
-    setTambahanTahunan("");
-    setStartYear(String(currentYear));
-    setEndYear(String(currentYear + 4));
+    localStorage.removeItem("proj_birthDate");
   };
 
   return (
@@ -150,7 +183,28 @@ export default function InvestmentProjectionCalculator() {
       </div>
 
       <div className="row g-2 mb-3">
-         <div className="col-6">
+        <div className="col-6">
+          <input
+            type="date"
+            className="input-bibit w-100"
+            placeholder="Tanggal Lahir"
+            value={birthDate}
+            onChange={(e) => setBirthDate(e.target.value)}
+            style={{ textAlign: "center", fontSize: "16px" }}
+          />
+          <small
+            style={{
+              fontSize: "10px",
+              display: "block",
+              textAlign: "center",
+              marginTop: "4px",
+              color: "var(--bibit-text-secondary)",
+            }}
+          >
+            Tanggal Lahir
+          </small>
+        </div>
+        <div className="col-6">
           <input
             type="number"
             className="input-bibit w-100"
@@ -171,8 +225,10 @@ export default function InvestmentProjectionCalculator() {
             Target % Tahunan
           </small>
         </div>
+      </div>
 
-        <div className="col-3">
+      <div className="row g-2 mb-3">
+        <div className="col-6">
           <input
             type="number"
             className="input-bibit w-100"
@@ -190,10 +246,11 @@ export default function InvestmentProjectionCalculator() {
             }}
           >
             Tahun Mulai
+            {ageAtStart !== null && ` (Usia: ${ageAtStart} th)`}
           </small>
         </div>
 
-        <div className="col-3">
+        <div className="col-6">
           <input
             type="number"
             className="input-bibit w-100"
@@ -211,6 +268,7 @@ export default function InvestmentProjectionCalculator() {
             }}
           >
             Tahun Akhir
+            {ageAtEnd !== null && ` (Usia: ${ageAtEnd} th)`}
           </small>
         </div>
       </div>
@@ -241,7 +299,7 @@ export default function InvestmentProjectionCalculator() {
                       color: "var(--bibit-text-secondary)",
                     }}
                   >
-                    Tahun {r.year}
+                    Tahun {r.year} {r.age !== null ? `(Usia: ${r.age} th)` : ""}
                   </span>
                   <span
                     className="badge"
